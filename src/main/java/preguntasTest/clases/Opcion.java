@@ -4,24 +4,29 @@
  */
 package preguntasTest.clases;
 
+import java.util.Objects;
+
 /**
  *
  * @author Dam
  */
 public class Opcion {
     private Integer id;
+    private static int idTemp = 0;
     private Integer idPregunta;
-    private String respuesta;
+    private String texto;
     private Boolean correcta;
 
-    public Opcion(Integer idPregunta, Boolean correcta, String respuesta) {
+    public Opcion(Integer idPregunta, Boolean correcta, String texto) {
         this.idPregunta = idPregunta;
-        this.respuesta = respuesta;
+        this.texto = texto;
         this.correcta = correcta;
+        this.id = this.idTemp;
+        this.idTemp++;
     }
 
     public String getRespuesta() {
-        return respuesta;
+        return texto;
     }
 
     public Boolean getCorrecta() {
@@ -29,7 +34,7 @@ public class Opcion {
     }
 
     public void setRespuesta(String respuesta) {
-        this.respuesta = respuesta;
+        this.texto = respuesta;
     }
 
     public void setCorrecta(Boolean correcta) {
@@ -50,5 +55,32 @@ public class Opcion {
 
     public void setIdPregunta(Integer idPregunta) {
         this.idPregunta = idPregunta;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Opcion other = (Opcion) obj;
+        return Objects.equals(this.id, other.id);
+    }
+
+    @Override
+    public String toString() {
+        return "Opcion:" + "id=" + id + ", idPregunta=" + idPregunta + ", respuesta=" + texto + ", correcta=" + correcta;
     }
 }

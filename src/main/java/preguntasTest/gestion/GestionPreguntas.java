@@ -1,6 +1,5 @@
 package preguntasTest.gestion;
 
-import preguntasTest.dao.DAOPreguntas;
 import java.util.ArrayList;
 import java.util.Collections;
 import preguntasTest.clases.Opcion;
@@ -10,7 +9,7 @@ public class GestionPreguntas {
     private ArrayList<Pregunta> listaPreguntas;
 
     public GestionPreguntas() {
-            listaPreguntas = DAOPreguntas.getInstance().getPreguntas();
+        
     }
     
     public Integer numPreguntas() {
@@ -28,14 +27,7 @@ public class GestionPreguntas {
     }
     
     public ArrayList<Opcion> obtenerRespuestas(Pregunta pregunta) {
-        ArrayList<Opcion> listaRespuestas = new ArrayList<Opcion>();
-        
-        /*
-        listaRespuestas.add(pregunta.getOp1());
-        listaRespuestas.add(pregunta.getOp2());
-        listaRespuestas.add(pregunta.getOp3());
-        listaRespuestas.add(pregunta.getOp4());
-        */        
+        ArrayList<Opcion> listaRespuestas = new ArrayList<Opcion>();    
 
         Collections.shuffle(listaRespuestas);
         
