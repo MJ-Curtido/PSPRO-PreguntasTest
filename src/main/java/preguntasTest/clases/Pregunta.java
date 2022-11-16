@@ -5,12 +5,14 @@ public class Pregunta {
     private static int idTemp = 0;
     private boolean acertada;
     private String texto;
+    private Integer idUsuario;
 
-    public Pregunta(String texto) {
+    public Pregunta(String texto, Integer idUsuario) {
         this.texto = texto;
         this.acertada = false;
         this.id = this.idTemp;
         this.idTemp++;
+        this.idUsuario = idUsuario;
     }
 
     public boolean isAcertada() {

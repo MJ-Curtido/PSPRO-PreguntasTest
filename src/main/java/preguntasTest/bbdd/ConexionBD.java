@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import preguntasTest.clases.Opcion;
 import preguntasTest.clases.Pregunta;
+import preguntasTest.clases.Usuario;
 
 /**
  *
@@ -83,27 +85,56 @@ public class ConexionBD {
     }
     */
     
-    public static List<Pregunta> getPreguntas() { 
+    public static List<Usuario> getUsuarios() { 
         enlace();
         
-        List<Pregunta> listaPreguntas = null;
+        List<Usuario> listaUsuarios = null;
         
         try {
-            String sql = "SELECT * FROM vehiculo;";
+            String sql = "SELECT * FROM usuario;";
             stmt = conn.prepareStatement(sql);
             
             System.out.println(stmt.toString());
             
             rs = stmt.executeQuery();
             
-            listaPreguntas = new ArrayList<Pregunta>();
-            /*
+            listaUsuarios = new ArrayList<Usuario>();
+            
             while (rs.next()) {
-                listaPreguntas.add(new Pregunta(rs.getString("MARCA"),
-                        rs.getString("MODELO"),
-                        rs.getString("MATRICULA")));
+                listaUsuarios.add(new Usuario(rs.getString("NOMBRE"),
+                        rs.getString("APE1"),
+                        rs.getString("APE2")));
             }
-            */
+        } catch (SQLException ex) {
+            System.out.println("Error SQL: " + ex.toString());
+        }
+        
+        cerrarSesion();
+        
+        return listaUsuarios;
+    }
+    
+    public static List<Pregunta> getPreguntas(Usuario usuario) { 
+        enlace();
+        
+        List<Pregunta> listaPreguntas = null;
+        
+        try {
+            String sql = "SELECT * FROM pregunta WHERE id_usuario = ?;";
+            stmt = conn.prepareStatement(sql);
+            
+            stmt.setInt(1, usuario.getId());
+            
+            System.out.println(stmt.toString());
+            
+            rs = stmt.executeQuery();
+            
+            listaPreguntas = new ArrayList<Pregunta>();
+            
+            while (rs.next()) {
+                listaPreguntas.add(new Pregunta(rs.getString("TEXTO"),
+                        rs.getInt("ID_USUARIO")));
+            }
         } catch (SQLException ex) {
             System.out.println("Error SQL: " + ex.toString());
         }
@@ -111,6 +142,37 @@ public class ConexionBD {
         cerrarSesion();
         
         return listaPreguntas;
+    }
+    
+    public static List<Opcion> getOpciones(Pregunta pregunta) { 
+        enlace();
+        
+        List<Opcion> listaOpciones = null;
+        
+        try {
+            String sql = "SELECT * FROM opcion WHERE id_pregunta = ?;";
+            stmt = conn.prepareStatement(sql);
+            
+            stmt.setInt(1, pregunta.getId());
+            
+            System.out.println(stmt.toString());
+            
+            rs = stmt.executeQuery();
+            
+            listaOpciones = new ArrayList<Opcion>();
+            
+            while (rs.next()) {
+                listaOpciones.add(new Opcion(rs.getInt("ID_PREGUNTA"),
+                        rs.getBoolean("CORRECTA"),
+                        rs.getString("TEXTO")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error SQL: " + ex.toString());
+        }
+        
+        cerrarSesion();
+        
+        return listaOpciones;
     }
     
     /*
