@@ -14,6 +14,10 @@ public class Pregunta {
         this.idTemp++;
         this.idUsuario = idUsuario;
     }
+    
+    public Pregunta() {
+        
+    }
 
     public boolean isAcertada() {
             return acertada;

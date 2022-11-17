@@ -24,6 +24,10 @@ public class Usuario {
         this.id = this.idTemp;
         this.idTemp++;
     }
+    
+    public Usuario() {
+        
+    }
 
     public Integer getId() {
         return id;

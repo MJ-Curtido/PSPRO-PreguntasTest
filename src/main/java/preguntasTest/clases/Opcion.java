@@ -24,6 +24,9 @@ public class Opcion {
         this.id = this.idTemp;
         this.idTemp++;
     }
+    public Opcion() {
+        
+    }
 
     public String getRespuesta() {
         return texto;

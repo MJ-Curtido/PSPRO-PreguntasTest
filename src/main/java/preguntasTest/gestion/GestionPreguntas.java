@@ -1,36 +1,33 @@
 package preguntasTest.gestion;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import preguntasTest.bbdd.ConexionBD;
 import preguntasTest.clases.Opcion;
 import preguntasTest.clases.Pregunta;
+import preguntasTest.clases.Usuario;
 
 public class GestionPreguntas {
-    private ArrayList<Pregunta> listaPreguntas;
-
     public GestionPreguntas() {
         
     }
     
     public Integer numPreguntas() {
-        return listaPreguntas.size();
+        return null;
     }
     
     public Pregunta obtenerPregunta(Integer ind) {
-        return listaPreguntas.get(ind);
+        return null;
     }
     
-    public ArrayList<Pregunta> obtenerPreguntas() {
-        Collections.shuffle(this.listaPreguntas);
-        
-        return (ArrayList<Pregunta>) this.listaPreguntas.clone();
+    public ArrayList<Pregunta> obtenerPreguntas(Usuario usuario) {
+        return ConexionBD.getPreguntas(usuario);
     }
     
     public ArrayList<Opcion> obtenerRespuestas(Pregunta pregunta) {
-        ArrayList<Opcion> listaRespuestas = new ArrayList<Opcion>();    
-
-        Collections.shuffle(listaRespuestas);
-        
-        return listaRespuestas;
+        return ConexionBD.getOpciones(pregunta);
+    }
+    
+    public ArrayList<Usuario> obtenerUsuarios() {
+        return ConexionBD.getUsuarios();
     }
 }

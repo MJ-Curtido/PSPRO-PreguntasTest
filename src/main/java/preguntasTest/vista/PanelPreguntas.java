@@ -9,6 +9,7 @@ import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import preguntasTest.clases.Opcion;
 import preguntasTest.clases.Pregunta;
+import preguntasTest.clases.Usuario;
 import preguntasTest.gestion.GestionPreguntas;
 
 /**
@@ -34,8 +35,9 @@ public class PanelPreguntas extends javax.swing.JPanel {
         
         contAciertos = 0;
         numPregunta = 0;
-        
-        preguntas = this.gestion.obtenerPreguntas();
+        //cambiar, hacer que aparezca un menú arriba para poder elegir el usuario en ese menú, y pasar el usuario por todos los paneles
+        Usuario usuario = new Usuario();
+        preguntas = this.gestion.obtenerPreguntas(usuario);
         respuestas = this.gestion.obtenerRespuestas(this.preguntas.get(this.numPregunta));
         
         lblNumPregunta.setText((this.numPregunta + 1) + "");

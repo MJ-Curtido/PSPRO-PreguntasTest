@@ -6,7 +6,6 @@ package preguntasTest.bbdd;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import preguntasTest.clases.Opcion;
@@ -85,10 +84,10 @@ public class ConexionBD {
     }
     */
     
-    public static List<Usuario> getUsuarios() { 
+    public static ArrayList<Usuario> getUsuarios() { 
         enlace();
         
-        List<Usuario> listaUsuarios = null;
+        ArrayList<Usuario> listaUsuarios = null;
         
         try {
             String sql = "SELECT * FROM usuario;";
@@ -114,10 +113,10 @@ public class ConexionBD {
         return listaUsuarios;
     }
     
-    public static List<Pregunta> getPreguntas(Usuario usuario) { 
+    public static ArrayList<Pregunta> getPreguntas(Usuario usuario) { 
         enlace();
         
-        List<Pregunta> listaPreguntas = null;
+        ArrayList<Pregunta> listaPreguntas = null;
         
         try {
             String sql = "SELECT * FROM pregunta WHERE id_usuario = ?;";
@@ -144,10 +143,10 @@ public class ConexionBD {
         return listaPreguntas;
     }
     
-    public static List<Opcion> getOpciones(Pregunta pregunta) { 
+    public static ArrayList<Opcion> getOpciones(Pregunta pregunta) { 
         enlace();
         
-        List<Opcion> listaOpciones = null;
+        ArrayList<Opcion> listaOpciones = null;
         
         try {
             String sql = "SELECT * FROM opcion WHERE id_pregunta = ?;";
