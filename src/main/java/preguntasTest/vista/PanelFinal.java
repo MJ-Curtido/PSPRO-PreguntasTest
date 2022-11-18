@@ -12,7 +12,6 @@ import preguntasTest.gestion.GestionPreguntas;
  */
 public class PanelFinal extends javax.swing.JPanel {
     private VentanaPreguntasTest miVentana;
-    private GestionPreguntas gestion;
     
     /**
      * Creates new form panelFinal
@@ -21,9 +20,8 @@ public class PanelFinal extends javax.swing.JPanel {
         initComponents();
         
         this.miVentana = miVentana;
-        gestion = new GestionPreguntas();
         
-        lblAciertos.setText("Número de aciertos: " + numAciertos + " de " + gestion.numPreguntas());
+        //lblAciertos.setText("Número de aciertos: " + numAciertos + " de " + GestionPreguntas.getInstance().obtenerPreguntas(usuario).size());
     }
 
     /**

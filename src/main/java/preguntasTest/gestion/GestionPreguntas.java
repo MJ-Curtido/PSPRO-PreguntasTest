@@ -7,16 +7,17 @@ import preguntasTest.clases.Pregunta;
 import preguntasTest.clases.Usuario;
 
 public class GestionPreguntas {
+    private static GestionPreguntas gestion = null;
+    
     public GestionPreguntas() {
-        
     }
     
-    public Integer numPreguntas() {
-        return null;
-    }
-    
-    public Pregunta obtenerPregunta(Integer ind) {
-        return null;
+    public static GestionPreguntas getInstance() {
+        if (gestion == null) {
+            gestion = new GestionPreguntas();
+        }
+
+        return gestion;
     }
     
     public ArrayList<Pregunta> obtenerPreguntas(Usuario usuario) {

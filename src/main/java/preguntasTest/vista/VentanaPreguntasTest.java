@@ -1,7 +1,11 @@
 package preguntasTest.vista;
 
 import java.awt.Panel;
+import java.util.ArrayList;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import preguntasTest.clases.Usuario;
+import preguntasTest.gestion.GestionPreguntas;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -28,6 +32,12 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
         this.getContentPane().add(panelActivo);
         panelActivo.setSize(this.getSize());
         panelActivo.setVisible(true);
+        
+        ArrayList<Usuario> usuarios = GestionPreguntas.getInstance().obtenerUsuarios();
+        
+        for (Usuario usuario : usuarios) {
+            menuUsuarios.add(new JMenuItem(usuario.getNombre() + " " + usuario.getApellido1() + " " + usuario.getApellido2()));
+        }
     }
     
     public void cambiarPanel(JPanel panel){
@@ -49,7 +59,15 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        menuBarraArriba = new javax.swing.JMenuBar();
+        menuUsuarios = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        menuUsuarios.setText("Usuarios");
+        menuBarraArriba.add(menuUsuarios);
+
+        setJMenuBar(menuBarraArriba);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -90,5 +108,7 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar menuBarraArriba;
+    private javax.swing.JMenu menuUsuarios;
     // End of variables declaration//GEN-END:variables
 }

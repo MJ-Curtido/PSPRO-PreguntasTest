@@ -3,13 +3,11 @@ package preguntasTest.clases;
 public class Pregunta {
     private Integer id;
     private static int idTemp = 0;
-    private boolean acertada;
     private String texto;
     private Integer idUsuario;
 
     public Pregunta(String texto, Integer idUsuario) {
         this.texto = texto;
-        this.acertada = false;
         this.id = this.idTemp;
         this.idTemp++;
         this.idUsuario = idUsuario;
@@ -17,14 +15,6 @@ public class Pregunta {
     
     public Pregunta() {
         
-    }
-
-    public boolean isAcertada() {
-            return acertada;
-    }
-
-    public void setAcertada(boolean acertada) {
-            this.acertada = acertada;
     }
 
     public String getPregunta() {
@@ -67,6 +57,6 @@ public class Pregunta {
 
     @Override
     public String toString() {
-        return "Pregunta:" + "id=" + id + ", acertada=" + acertada + ", pregunta=" + texto;
+        return "Pregunta:" + "id=" + id + ", pregunta=" + texto;
     }
 }
