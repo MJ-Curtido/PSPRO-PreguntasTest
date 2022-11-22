@@ -55,10 +55,15 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
         }
     }
     
+    public Usuario obtenerUsuario() {
+        return usuarioActual;
+    }
+    
     private void cambiarUsuario(JMenuItem usuario) {
         for (int i = 0; i < menuUsuarios.getItemCount(); i++) {
             if (menuUsuarios.getItem(i) == usuario) {
                 usuarioActual = usuarios.get(i);
+                menuUsuarios.setText(usuario.getText());
             }
         }
     }  
@@ -70,6 +75,14 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
         this.getContentPane().add(panelActivo);
         panelActivo.setSize(this.getSize());
         panelActivo.setVisible(true);
+        
+        if (panel instanceof PanelInicio) {
+            menuUsuarios.setEnabled(true);
+        }
+        else {
+            menuUsuarios.setEnabled(false);
+        }
+        
         panelActivo.updateUI();
     }
     

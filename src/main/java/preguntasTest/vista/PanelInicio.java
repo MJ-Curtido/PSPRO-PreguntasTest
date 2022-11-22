@@ -4,13 +4,17 @@
  */
 package preguntasTest.vista;
 
+import javax.swing.JOptionPane;
+import preguntasTest.clases.Usuario;
+
 /**
  *
  * @author Dam
  */
 public class PanelInicio extends javax.swing.JPanel {
 
-    private final VentanaPreguntasTest miVentana;
+    private VentanaPreguntasTest miVentana;
+    private Usuario usuarioActual;
 
     /**
      * Creates new form panelInicio
@@ -31,6 +35,7 @@ public class PanelInicio extends javax.swing.JPanel {
 
         lblTitulo = new javax.swing.JLabel();
         btnJugar = new javax.swing.JButton();
+        btnCRUD = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(400, 400));
         setMinimumSize(new java.awt.Dimension(400, 400));
@@ -50,39 +55,72 @@ public class PanelInicio extends javax.swing.JPanel {
             }
         });
 
+        btnCRUD.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        btnCRUD.setText("CRUD");
+        btnCRUD.setName("btnJugar"); // NOI18N
+        btnCRUD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCRUDActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(lblTitulo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(206, 206, 206)
-                        .addComponent(btnJugar)))
+                .addGap(71, 71, 71)
+                .addComponent(lblTitulo)
                 .addGap(66, 66, 66))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnCRUD)
+                .addGap(81, 81, 81)
+                .addComponent(btnJugar)
+                .addGap(126, 126, 126))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(67, 67, 67)
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
-                .addComponent(btnJugar)
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addGap(55, 55, 55)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnJugar)
+                    .addComponent(btnCRUD))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugarActionPerformed
-        PanelPreguntas panel =new PanelPreguntas(miVentana);
+        if (miVentana.obtenerUsuario() != null) {
+            usuarioActual = miVentana.obtenerUsuario();
+            
+            PanelPreguntas panel = new PanelPreguntas(miVentana, usuarioActual);
         
-        miVentana.cambiarPanel(panel);
+            miVentana.cambiarPanel(panel);
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "No ha elegido ningún usuario.");
+        }
     }//GEN-LAST:event_btnJugarActionPerformed
+
+    private void btnCRUDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCRUDActionPerformed
+        if (miVentana.obtenerUsuario() != null) {
+            usuarioActual = miVentana.obtenerUsuario();
+            
+            PanelCRUD panel = new PanelCRUD(miVentana, usuarioActual);
+        
+            miVentana.cambiarPanel(panel);
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "No ha elegido ningún usuario.");
+        }
+    }//GEN-LAST:event_btnCRUDActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCRUD;
     private javax.swing.JButton btnJugar;
     private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables

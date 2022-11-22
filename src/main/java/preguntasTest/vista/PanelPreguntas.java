@@ -11,6 +11,7 @@ import preguntasTest.clases.Opcion;
 import preguntasTest.clases.Pregunta;
 import preguntasTest.clases.Usuario;
 import preguntasTest.gestion.GestionPreguntas;
+import preguntasTest.clases.Usuario;
 
 /**
  *
@@ -18,27 +19,26 @@ import preguntasTest.gestion.GestionPreguntas;
  */
 public class PanelPreguntas extends javax.swing.JPanel {
     private VentanaPreguntasTest miVentana;
-    private GestionPreguntas gestion;
     private Integer numPregunta;
     private ArrayList<Pregunta> preguntas;
     private ArrayList<Opcion> respuestas;
     private Integer contAciertos;
+    private Usuario usuarioActual;
     /**
      * Creates new form PanelPreguntas
      */
-    public PanelPreguntas(VentanaPreguntasTest miVentana) {
+    public PanelPreguntas(VentanaPreguntasTest miVentana, Usuario usuario) {
         initComponents();
         
         this.miVentana = miVentana;
-        
-        this.gestion = new GestionPreguntas();
+        this.usuarioActual = usuario;
         
         contAciertos = 0;
         numPregunta = 0;
-        //cambiar, hacer que aparezca un menú arriba para poder elegir el usuario en ese menú, y pasar el usuario por todos los paneles
-        Usuario usuario = new Usuario();
-        preguntas = this.gestion.obtenerPreguntas(usuario);
-        respuestas = this.gestion.obtenerRespuestas(this.preguntas.get(this.numPregunta));
+        
+        this.usuarioActual = usuario;
+        preguntas = GestionPreguntas.getInstance().obtenerPreguntas(usuario);
+        respuestas = GestionPreguntas.getInstance().obtenerRespuestas(this.preguntas.get(this.numPregunta));
         
         lblNumPregunta.setText((this.numPregunta + 1) + "");
         lblPregunta.setText(this.preguntas.get(0).getPregunta());
@@ -158,7 +158,7 @@ public class PanelPreguntas extends javax.swing.JPanel {
             
             this.numPregunta++;
         
-            respuestas = this.gestion.obtenerRespuestas(this.preguntas.get(this.numPregunta));
+            respuestas = GestionPreguntas.getInstance().obtenerRespuestas(this.preguntas.get(this.numPregunta));
 
             lblNumPregunta.setText((this.numPregunta + 1) + "");
             lblPregunta.setText(this.preguntas.get(this.numPregunta).getPregunta());
