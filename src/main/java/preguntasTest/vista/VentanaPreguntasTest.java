@@ -21,6 +21,7 @@ import preguntasTest.gestion.GestionPreguntas;
 public class VentanaPreguntasTest extends javax.swing.JFrame {
     private JPanel panelActivo;
     private Usuario usuarioActual;
+    ArrayList<Usuario> usuarios;
     /**
      * Creates new form VentanaPreguntasTest
      */
@@ -36,34 +37,30 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
         panelActivo.setSize(this.getSize());
         panelActivo.setVisible(true);
         
-        ArrayList<Usuario> usuarios = GestionPreguntas.getInstance().obtenerUsuarios();
+        usuarioActual = null;
+                
+        usuarios = GestionPreguntas.getInstance().obtenerUsuarios();
         
         for (int i = 0; i < usuarios.size(); i++) {
-            menuUsuarios.add(new JMenuItem(usuarios.get(i).getNombre() + " " + usuarios.get(i).getApellido1() + " " + usuarios.get(i).getApellido2()));
-            
-            usuarioActual = new Usuario(usuarios.get(i));
+            menuUsuarios.add(new JMenuItem(usuarios.get(i).getId() + ". " + usuarios.get(i).getNombre() + " " + usuarios.get(i).getApellido1() + " " + usuarios.get(i).getApellido2()));
             
             ActionListener accion = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    cambiarUsuario(usuarioActual);
+                    cambiarUsuario((JMenuItem) e.getSource());
                 }
             };
             
             menuUsuarios.getItem(i).addActionListener(accion);
-            /*
-            menuUsuarios.getItem(i).addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    cambiarUsuario(usuarioActual);
-                }
-            });
-            */
         }
     }
     
-    private void cambiarUsuario(Usuario usuario) {                                         
-        System.out.println(usuario.getApellido1());
+    private void cambiarUsuario(JMenuItem usuario) {
+        for (int i = 0; i < menuUsuarios.getItemCount(); i++) {
+            if (menuUsuarios.getItem(i) == usuario) {
+                usuarioActual = usuarios.get(i);
+            }
+        }
     }  
     
     public void cambiarPanel(JPanel panel){
