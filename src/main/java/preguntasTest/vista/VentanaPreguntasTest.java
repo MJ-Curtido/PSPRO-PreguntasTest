@@ -1,6 +1,8 @@
 package preguntasTest.vista;
 
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -18,6 +20,7 @@ import preguntasTest.gestion.GestionPreguntas;
  */
 public class VentanaPreguntasTest extends javax.swing.JFrame {
     private JPanel panelActivo;
+    private Usuario usuarioActual;
     /**
      * Creates new form VentanaPreguntasTest
      */
@@ -35,10 +38,33 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
         
         ArrayList<Usuario> usuarios = GestionPreguntas.getInstance().obtenerUsuarios();
         
-        for (Usuario usuario : usuarios) {
-            menuUsuarios.add(new JMenuItem(usuario.getNombre() + " " + usuario.getApellido1() + " " + usuario.getApellido2()));
+        for (int i = 0; i < usuarios.size(); i++) {
+            menuUsuarios.add(new JMenuItem(usuarios.get(i).getNombre() + " " + usuarios.get(i).getApellido1() + " " + usuarios.get(i).getApellido2()));
+            
+            usuarioActual = new Usuario(usuarios.get(i));
+            
+            ActionListener accion = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    cambiarUsuario(usuarioActual);
+                }
+            };
+            
+            menuUsuarios.getItem(i).addActionListener(accion);
+            /*
+            menuUsuarios.getItem(i).addActionListener(new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    cambiarUsuario(usuarioActual);
+                }
+            });
+            */
         }
     }
+    
+    private void cambiarUsuario(Usuario usuario) {                                         
+        System.out.println(usuario.getApellido1());
+    }  
     
     public void cambiarPanel(JPanel panel){
         panelActivo.setVisible(false);

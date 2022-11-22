@@ -17,6 +17,13 @@ public class Usuario {
     private String apellido1;
     private String apellido2;
 
+    public Usuario(Usuario usuario) {
+        this.nombre = usuario.getNombre();
+        this.apellido1 = usuario.getApellido1();
+        this.apellido2 = usuario.getApellido2();
+        this.id = usuario.getId();
+    }
+    
     public Usuario(String nombre, String apellido1, String apellido2) {
         this.nombre = nombre;
         this.apellido1 = apellido1;
