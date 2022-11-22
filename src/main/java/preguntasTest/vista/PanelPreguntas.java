@@ -41,7 +41,7 @@ public class PanelPreguntas extends javax.swing.JPanel {
         respuestas = GestionPreguntas.getInstance().obtenerRespuestas(this.preguntas.get(this.numPregunta));
         
         lblNumPregunta.setText((this.numPregunta + 1) + "");
-        lblPregunta.setText(this.preguntas.get(0).getPregunta());
+        lblPregunta.setText(this.preguntas.get(numPregunta).getPregunta());
         rbtnRespuesta1.setText(this.respuestas.get(0).getRespuesta());
         rbtnRespuesta2.setText(this.respuestas.get(1).getRespuesta());
         rbtnRespuesta3.setText(this.respuestas.get(2).getRespuesta());
@@ -147,7 +147,7 @@ public class PanelPreguntas extends javax.swing.JPanel {
                 this.contAciertos++;
             }  
             
-            PanelFinal panel =new PanelFinal(miVentana, contAciertos);
+            PanelFinal panel =new PanelFinal(miVentana, usuarioActual, contAciertos);
         
             miVentana.cambiarPanel(panel);
         }

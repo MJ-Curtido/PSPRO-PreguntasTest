@@ -4,6 +4,7 @@
  */
 package preguntasTest.vista;
 
+import preguntasTest.clases.Usuario;
 import preguntasTest.gestion.GestionPreguntas;
 
 /**
@@ -12,16 +13,16 @@ import preguntasTest.gestion.GestionPreguntas;
  */
 public class PanelFinal extends javax.swing.JPanel {
     private VentanaPreguntasTest miVentana;
-    
+    Usuario usuarioActual;
     /**
      * Creates new form panelFinal
      */
-    public PanelFinal(VentanaPreguntasTest miVentana, Integer numAciertos) {
+    public PanelFinal(VentanaPreguntasTest miVentana, Usuario usuario,  Integer numAciertos) {
         initComponents();
         
         this.miVentana = miVentana;
-        
-        //lblAciertos.setText("Número de aciertos: " + numAciertos + " de " + GestionPreguntas.getInstance().obtenerPreguntas(usuario).size());
+        this.usuarioActual = usuario;
+        lblAciertos.setText("Número de aciertos: " + numAciertos + " de " + GestionPreguntas.getInstance().obtenerPreguntas(usuario).size());
     }
 
     /**
@@ -34,7 +35,7 @@ public class PanelFinal extends javax.swing.JPanel {
     private void initComponents() {
 
         lblAciertos = new javax.swing.JLabel();
-        btnSalir = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(400, 384));
         setMinimumSize(new java.awt.Dimension(400, 384));
@@ -44,12 +45,12 @@ public class PanelFinal extends javax.swing.JPanel {
         lblAciertos.setText("Número de aciertos: ");
         lblAciertos.setName("lblAciertos"); // NOI18N
 
-        btnSalir.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btnSalir.setText("Salir");
-        btnSalir.setName("btnSalir"); // NOI18N
-        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+        btnVolver.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        btnVolver.setText("Volver");
+        btnVolver.setName("btnVolver"); // NOI18N
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalirActionPerformed(evt);
+                btnVolverActionPerformed(evt);
             }
         });
 
@@ -61,7 +62,7 @@ public class PanelFinal extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(209, 209, 209)
-                        .addComponent(btnSalir))
+                        .addComponent(btnVolver))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(149, 149, 149)
                         .addComponent(lblAciertos)))
@@ -73,18 +74,20 @@ public class PanelFinal extends javax.swing.JPanel {
                 .addContainerGap(135, Short.MAX_VALUE)
                 .addComponent(lblAciertos)
                 .addGap(106, 106, 106)
-                .addComponent(btnSalir)
+                .addComponent(btnVolver)
                 .addGap(81, 81, 81))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_btnSalirActionPerformed
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        PanelInicio panel = new PanelInicio(miVentana);
+        
+        miVentana.cambiarPanel(panel);
+    }//GEN-LAST:event_btnVolverActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JLabel lblAciertos;
     // End of variables declaration//GEN-END:variables
 }
