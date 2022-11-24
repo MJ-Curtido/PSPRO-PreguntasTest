@@ -41,7 +41,7 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
         usuarios = GestionPreguntas.getInstance().obtenerUsuarios();
         
         for (int i = 0; i < usuarios.size(); i++) {
-            menuUsuarios.add(new JMenuItem(usuarios.get(i).getId() + ". " + usuarios.get(i).getNombre() + " " + usuarios.get(i).getApellido1() + " " + usuarios.get(i).getApellido2()));
+            menuUsuarios.add(new JMenuItem(usuarios.get(i).getNombre() + " " + usuarios.get(i).getApellido1() + " " + usuarios.get(i).getApellido2()));
             
             ActionListener accion = new ActionListener() {
                 @Override

@@ -96,7 +96,6 @@ public class PanelInicio extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugarActionPerformed
-        System.out.println(miVentana.obtenerUsuario());
         if (miVentana.obtenerUsuario() != null) {
             usuarioActual = miVentana.obtenerUsuario();
             
@@ -110,7 +109,6 @@ public class PanelInicio extends javax.swing.JPanel {
     }//GEN-LAST:event_btnJugarActionPerformed
 
     private void btnCRUDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCRUDActionPerformed
-           System.out.println(miVentana.obtenerUsuario());
         if (miVentana.obtenerUsuario() != null) {
             usuarioActual = miVentana.obtenerUsuario();
             

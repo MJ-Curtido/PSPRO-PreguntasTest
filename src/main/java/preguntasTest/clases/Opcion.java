@@ -24,6 +24,14 @@ public class Opcion {
         this.id = this.idTemp;
         this.idTemp++;
     }
+    
+    public Opcion(Integer id, Integer idPregunta, Boolean correcta, String texto) {
+        this.idPregunta = idPregunta;
+        this.texto = texto;
+        this.correcta = correcta;
+        this.id = id;
+    }
+    
     public Opcion() {
         
     }

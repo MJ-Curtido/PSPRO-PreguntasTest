@@ -32,6 +32,13 @@ public class Usuario {
         this.idTemp++;
     }
     
+    public Usuario(Integer id, String nombre, String apellido1, String apellido2) {
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.id = id;
+    }
+    
     public Usuario() {
         
     }

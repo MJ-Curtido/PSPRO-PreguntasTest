@@ -13,6 +13,12 @@ public class Pregunta {
         this.idUsuario = idUsuario;
     }
     
+    public Pregunta(Integer id, String texto, Integer idUsuario) {
+        this.texto = texto;
+        this.id = id;
+        this.idUsuario = idUsuario;
+    }
+    
     public Pregunta() {
         
     }

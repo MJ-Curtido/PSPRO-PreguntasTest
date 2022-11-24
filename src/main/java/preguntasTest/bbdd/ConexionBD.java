@@ -100,7 +100,8 @@ public class ConexionBD {
             listaUsuarios = new ArrayList<Usuario>();
             
             while (rs.next()) {
-                listaUsuarios.add(new Usuario(rs.getString("NOMBRE"),
+                listaUsuarios.add(new Usuario(rs.getInt("ID"),
+                        rs.getString("NOMBRE"),
                         rs.getString("APE1"),
                         rs.getString("APE2")));
             }
@@ -131,7 +132,8 @@ public class ConexionBD {
             listaPreguntas = new ArrayList<Pregunta>();
             
             while (rs.next()) {
-                listaPreguntas.add(new Pregunta(rs.getString("TEXTO"),
+                listaPreguntas.add(new Pregunta(rs.getInt("ID"),
+                        rs.getString("TEXTO"),
                         rs.getInt("ID_USUARIO")));
             }
         } catch (SQLException ex) {
@@ -161,7 +163,8 @@ public class ConexionBD {
             listaOpciones = new ArrayList<Opcion>();
             
             while (rs.next()) {
-                listaOpciones.add(new Opcion(rs.getInt("ID_PREGUNTA"),
+                listaOpciones.add(new Opcion(rs.getInt("ID"),
+                        rs.getInt("ID_PREGUNTA"),
                         rs.getBoolean("CORRECTA"),
                         rs.getString("TEXTO")));
             }

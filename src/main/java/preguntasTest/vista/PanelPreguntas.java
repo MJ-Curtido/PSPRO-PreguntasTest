@@ -9,7 +9,6 @@ import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import preguntasTest.clases.Opcion;
 import preguntasTest.clases.Pregunta;
-import preguntasTest.clases.Usuario;
 import preguntasTest.gestion.GestionPreguntas;
 import preguntasTest.clases.Usuario;
 
