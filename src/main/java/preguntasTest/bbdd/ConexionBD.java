@@ -173,26 +173,25 @@ public class ConexionBD {
         
         return listaOpciones;
     }
-    
     /*
-    public static Vehiculo obtenerVehiculo(String matricula) {
+    public static Usuario obtenerUsuario(Integer id) {
         enlace();
         
-        Vehiculo vehiculo = null;
+        Usuario usuario = null;
         
         try {
             
-            String sql = "SELECT * FROM vehiculo WHERE matricula = ?;";
+            String sql = "SELECT * FROM usuario WHERE id = ?;";
             stmt = conn.prepareStatement(sql);
             
-            stmt.setString(1, matricula);
+            stmt.setInt(1, id);
             
             System.out.println(stmt.toString());
             
             rs = stmt.executeQuery();
             
             if(rs.next()){
-                vehiculo = new Vehiculo(rs.getString("Marca"), rs.getString("Modelo"), rs.getString("Matricula"));
+                usuario = new Usuario(rs.getString("Marca"), rs.getString("Modelo"), rs.getString("Matricula"));
             } 
         } catch (SQLException ex) {
             System.out.println("Error SQL: " + ex.getMessage());
@@ -200,7 +199,7 @@ public class ConexionBD {
         
         cerrarSesion();
         
-        return vehiculo;
+        return usuario;
     }
     */
     /*

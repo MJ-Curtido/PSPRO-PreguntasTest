@@ -20,7 +20,6 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="lblPregunta" alignment="0" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
@@ -30,6 +29,7 @@
                           <Component id="rbtnRespuesta4" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="rbtnRespuesta1" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="rbtnRespuesta2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblPregunta" alignment="0" min="-2" pref="437" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -37,7 +37,7 @@
                       <Component id="lblNumPregunta" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="248" max="32767" attributes="0"/>
+              <EmptySpace pref="32" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -51,9 +51,9 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               <Component id="lblNumPregunta" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="lblPregunta" min="-2" pref="54" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="rbtnRespuesta1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="rbtnRespuesta2" min="-2" max="-2" attributes="0"/>

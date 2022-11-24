@@ -22,6 +22,8 @@ public class PanelInicio extends javax.swing.JPanel {
     public PanelInicio(VentanaPreguntasTest miVentana) {
         initComponents();
         this.miVentana = miVentana;
+        
+        
     }
 
     /**
@@ -69,30 +71,32 @@ public class PanelInicio extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(71, 71, 71)
-                .addComponent(lblTitulo)
-                .addGap(66, 66, 66))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnCRUD)
-                .addGap(81, 81, 81)
-                .addComponent(btnJugar)
-                .addGap(126, 126, 126))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(lblTitulo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addComponent(btnCRUD)
+                        .addGap(81, 81, 81)
+                        .addComponent(btnJugar)))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(67, 67, 67)
+                .addGap(60, 60, 60)
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
+                .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnJugar)
                     .addComponent(btnCRUD))
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugarActionPerformed
+        System.out.println(miVentana.obtenerUsuario());
         if (miVentana.obtenerUsuario() != null) {
             usuarioActual = miVentana.obtenerUsuario();
             
@@ -106,6 +110,7 @@ public class PanelInicio extends javax.swing.JPanel {
     }//GEN-LAST:event_btnJugarActionPerformed
 
     private void btnCRUDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCRUDActionPerformed
+           System.out.println(miVentana.obtenerUsuario());
         if (miVentana.obtenerUsuario() != null) {
             usuarioActual = miVentana.obtenerUsuario();
             
