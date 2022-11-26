@@ -9,7 +9,7 @@ import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import preguntasTest.clases.Opcion;
 import preguntasTest.clases.Pregunta;
-import preguntasTest.gestion.GestionPreguntas;
+import preguntasTest.gestion.Gestion;
 import preguntasTest.clases.Usuario;
 
 /**
@@ -36,8 +36,8 @@ public class PanelPreguntas extends javax.swing.JPanel {
         numPregunta = 0;
         
         this.usuarioActual = usuario;
-        preguntas = GestionPreguntas.getInstance().obtenerPreguntas(usuario);
-        respuestas = GestionPreguntas.getInstance().obtenerRespuestas(this.preguntas.get(this.numPregunta));
+        preguntas = Gestion.getInstance().obtenerPreguntas(usuario);
+        respuestas = Gestion.getInstance().obtenerRespuestas(this.preguntas.get(this.numPregunta));
         
         lblNumPregunta.setText((this.numPregunta + 1) + "");
         lblPregunta.setText(this.preguntas.get(numPregunta).getPregunta());
@@ -157,7 +157,7 @@ public class PanelPreguntas extends javax.swing.JPanel {
             
             this.numPregunta++;
         
-            respuestas = GestionPreguntas.getInstance().obtenerRespuestas(this.preguntas.get(this.numPregunta));
+            respuestas = Gestion.getInstance().obtenerRespuestas(this.preguntas.get(this.numPregunta));
 
             lblNumPregunta.setText((this.numPregunta + 1) + "");
             lblPregunta.setText(this.preguntas.get(this.numPregunta).getPregunta());

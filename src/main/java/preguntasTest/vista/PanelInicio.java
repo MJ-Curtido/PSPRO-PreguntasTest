@@ -37,7 +37,8 @@ public class PanelInicio extends javax.swing.JPanel {
 
         lblTitulo = new javax.swing.JLabel();
         btnJugar = new javax.swing.JButton();
-        btnCRUD = new javax.swing.JButton();
+        btnPregCRUD = new javax.swing.JButton();
+        btnUsuCRUD = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(400, 400));
         setMinimumSize(new java.awt.Dimension(400, 400));
@@ -57,12 +58,21 @@ public class PanelInicio extends javax.swing.JPanel {
             }
         });
 
-        btnCRUD.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btnCRUD.setText("CRUD");
-        btnCRUD.setName("btnJugar"); // NOI18N
-        btnCRUD.addActionListener(new java.awt.event.ActionListener() {
+        btnPregCRUD.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        btnPregCRUD.setText("CRUD Preguntas");
+        btnPregCRUD.setName("btnJugar"); // NOI18N
+        btnPregCRUD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCRUDActionPerformed(evt);
+                btnPregCRUDActionPerformed(evt);
+            }
+        });
+
+        btnUsuCRUD.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        btnUsuCRUD.setText("CRUD Usuarios");
+        btnUsuCRUD.setName("btnJugar"); // NOI18N
+        btnUsuCRUD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuCRUDActionPerformed(evt);
             }
         });
 
@@ -76,22 +86,28 @@ public class PanelInicio extends javax.swing.JPanel {
                         .addGap(64, 64, 64)
                         .addComponent(lblTitulo))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(108, 108, 108)
-                        .addComponent(btnCRUD)
-                        .addGap(81, 81, 81)
-                        .addComponent(btnJugar)))
-                .addContainerGap(73, Short.MAX_VALUE))
+                        .addGap(31, 31, 31)
+                        .addComponent(btnUsuCRUD, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnPregCRUD)))
+                .addContainerGap(28, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnJugar)
+                .addGap(204, 204, 204))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnJugar)
-                    .addComponent(btnCRUD))
-                .addContainerGap(117, Short.MAX_VALUE))
+                    .addComponent(btnUsuCRUD)
+                    .addComponent(btnPregCRUD))
+                .addGap(18, 18, 18)
+                .addComponent(btnJugar)
+                .addGap(50, 50, 50))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -108,7 +124,7 @@ public class PanelInicio extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnJugarActionPerformed
 
-    private void btnCRUDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCRUDActionPerformed
+    private void btnPregCRUDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPregCRUDActionPerformed
         if (miVentana.obtenerUsuario() != null) {
             usuarioActual = miVentana.obtenerUsuario();
             
@@ -119,12 +135,19 @@ public class PanelInicio extends javax.swing.JPanel {
         else {
             JOptionPane.showMessageDialog(null, "No ha elegido ningún usuario.");
         }
-    }//GEN-LAST:event_btnCRUDActionPerformed
+    }//GEN-LAST:event_btnPregCRUDActionPerformed
+
+    private void btnUsuCRUDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuCRUDActionPerformed
+        PanelUsuarios panel = new PanelUsuarios(miVentana);
+        
+        miVentana.cambiarPanel(panel);
+    }//GEN-LAST:event_btnUsuCRUDActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCRUD;
     private javax.swing.JButton btnJugar;
+    private javax.swing.JButton btnPregCRUD;
+    private javax.swing.JButton btnUsuCRUD;
     private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
 }

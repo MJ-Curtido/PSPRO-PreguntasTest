@@ -4,17 +4,33 @@
  */
 package preguntasTest.vista;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import preguntasTest.clases.Usuario;
+import preguntasTest.gestion.Gestion;
+
 /**
  *
  * @author Dam
  */
 public class PanelUsuarios extends javax.swing.JPanel {
-
+    VentanaPreguntasTest miVentana;
+    private Boolean editar;
+    private Usuario usuarioAEditar;
+    
     /**
      * Creates new form PanelUsuarios
      */
     public PanelUsuarios(VentanaPreguntasTest miVentana) {
         initComponents();
+        
+        this.miVentana = miVentana;
+        editar = false;                                                                                                                                        
+        
+        cargarTabla(tablaUsuarios);
     }
 
     /**
@@ -165,17 +181,109 @@ public class PanelUsuarios extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        if (editar) {
+            if (Gestion.getInstance().editarVehiculo(usuarioAEditar, Integer.parseInt(tbId.getText()), tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString())) {
+                JOptionPane.showMessageDialog(null, "Usuario editado correctamente.");
+                cargarTabla(tablaUsuarios);
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese id.");
+            }
+            
+            btnRegistrar.setText("Registrar");
+            editar = false;
+        }
+        else {
+            if (tbId.getText().equals("") || tbNombre.getText().equals("") || tbApellido1.getText().equals("") || tbApellido2.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Debes introducir todos los valores para poder registrar un usuario.");
+            }
+            else {
+                insertarUsuario();
+                cargarTabla(tablaUsuarios);
+            }
+        }
         
+        this.updateUI();
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        if (tablaUsuarios.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Debes seleccionar mínimo un usuario para poder eliminarlo.");
+        }
+        else {
+            int[] filas = tablaUsuarios.getSelectedRows();
+            
+            List<Usuario> usuarios = new ArrayList<Usuario>();
+            
+            for (int i = 0; i < filas.length; i++) {
+                usuarios.add(new Usuario(Integer.parseInt(tablaUsuarios.getValueAt(filas[i], 0).toString())));
+            }
+            
+            Gestion.getInstance().eliminarUsuarios(usuarios);
+            cargarTabla(tablaUsuarios);
+        }
         
+        this.updateUI();
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnLeerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeerActionPerformed
+        if (tablaUsuarios.getSelectedRowCount() == 1) {
+            usuarioAEditar = new Usuario(Integer.parseInt(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).toString()));
         
+            tbId.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).toString());
+            tbNombre.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 1).toString());
+            tbApellido1.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 2).toString());
+            tbApellido2.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 3).toString());
+
+            btnRegistrar.setText("Editar");
+            editar = true;
+        }
+        else if (tablaUsuarios.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Debes seleccionar mínimo un usuario para poder editarlo.");
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "No puedes editar más de un usuario a la vez.");
+        }
     }//GEN-LAST:event_btnLeerActionPerformed
 
+    public void insertarUsuario() {
+        if (Gestion.getInstance().anyadirUsuario(new Usuario(Integer.parseInt(tbId.getText()), tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString()))) {
+            cargarTabla(tablaUsuarios);
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "El usuario que se intenta añadir ya existe en nuestra base de datos.");
+        }
+    }
+    
+    public void cargarTabla(JTable tablaUsuarios) {
+        List<Usuario> lista = Gestion.getInstance().obtenerUsuarios();
+
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        modelo.addColumn("Id");
+
+        modelo.addColumn("Nombre");
+
+        modelo.addColumn("Apellido1");
+        
+        modelo.addColumn("Apellido2");
+
+        for (Usuario usuario : lista) {
+
+            Object[] registroLeido
+                    = {
+                        usuario.getId(),
+                        usuario.getNombre(),
+                        usuario.getApellido1(),
+                        usuario.getApellido2()
+                    };
+
+            modelo.addRow(registroLeido);
+
+        }
+
+        tablaUsuarios.setModel(modelo);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBorrar;

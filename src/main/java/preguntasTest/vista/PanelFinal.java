@@ -5,7 +5,7 @@
 package preguntasTest.vista;
 
 import preguntasTest.clases.Usuario;
-import preguntasTest.gestion.GestionPreguntas;
+import preguntasTest.gestion.Gestion;
 
 /**
  *
@@ -22,7 +22,7 @@ public class PanelFinal extends javax.swing.JPanel {
         
         this.miVentana = miVentana;
         this.usuarioActual = usuario;
-        lblAciertos.setText("Número de aciertos: " + numAciertos + " de " + GestionPreguntas.getInstance().obtenerPreguntas(usuario).size());
+        lblAciertos.setText("Número de aciertos: " + numAciertos + " de " + Gestion.getInstance().obtenerPreguntas(usuario).size());
     }
 
     /**

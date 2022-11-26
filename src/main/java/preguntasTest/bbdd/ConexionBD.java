@@ -39,17 +39,17 @@ public class ConexionBD {
         }
     }
     
-    /*
-    public static void insertarVehiculo(Vehiculo vehiculo) { 
+    public static void insertarUsuario(Usuario usuario) { 
         enlace();
         
         try {
-            String sql = "INSERT INTO vehiculo (MARCA, MODELO, MATRICULA) VALUES (?, ?, ?);";
+            String sql = "INSERT INTO usuario (ID, NOMBRE, APE1, APE2) VALUES (?, ?, ?, ?);";
             stmt = conn.prepareStatement(sql);
             
-            stmt.setString(1, vehiculo.getMarca());
-            stmt.setString(2, vehiculo.getModelo());
-            stmt.setString(3, vehiculo.getMatricula());
+            stmt.setInt(1, usuario.getId());
+            stmt.setString(2, usuario.getNombre());
+            stmt.setString(3, usuario.getApellido1());
+            stmt.setString(4, usuario.getApellido2());
             
             System.out.println(stmt.toString());
             
@@ -62,16 +62,15 @@ public class ConexionBD {
         
         cerrarSesion();       
     }
-    */
-    /*
-    public static void eliminarVehiculo(Vehiculo vehiculo) { 
+    
+    public static void eliminarUsuario(Usuario usuario) { 
         enlace();
         
         try {
-            String sql = "DELETE FROM vehiculo WHERE MATRICULA = ?;";
+            String sql = "DELETE FROM usuario WHERE ID = ?;";
             stmt = conn.prepareStatement(sql);
             
-            stmt.setString(1, vehiculo.getMatricula());
+            stmt.setInt(1, usuario.getId());
             
             System.out.println(stmt.toString());
             
@@ -82,7 +81,6 @@ public class ConexionBD {
         
         cerrarSesion();
     }
-    */
     
     public static ArrayList<Usuario> getUsuarios() { 
         enlace();
@@ -176,7 +174,7 @@ public class ConexionBD {
         
         return listaOpciones;
     }
-    /*
+    
     public static Usuario obtenerUsuario(Integer id) {
         enlace();
         
@@ -194,7 +192,10 @@ public class ConexionBD {
             rs = stmt.executeQuery();
             
             if(rs.next()){
-                usuario = new Usuario(rs.getString("Marca"), rs.getString("Modelo"), rs.getString("Matricula"));
+                usuario = new Usuario(rs.getInt("ID"),
+                        rs.getString("NOMBRE"),
+                        rs.getString("APE1"),
+                        rs.getString("APE2"));
             } 
         } catch (SQLException ex) {
             System.out.println("Error SQL: " + ex.getMessage());
@@ -204,19 +205,19 @@ public class ConexionBD {
         
         return usuario;
     }
-    */
-    /*
-    public static void editarVehiculo(Vehiculo vehiculo, String marca, String modelo, String matricula) { 
+    
+    public static void editarUsuario(Usuario usuario, Integer id, String nombre, String ape1, String ape2) { 
         enlace();
         
         try {
-            String sql = "UPDATE vehiculo SET MARCA = ?, MODELO = ?, MATRICULA = ? WHERE MATRICULA = ?;";
+            String sql = "UPDATE usuario SET ID = ?, NOMBRE = ?, APE1 = ?, APE2 = ? WHERE ID = ?;";
             stmt = conn.prepareStatement(sql);
             
-            stmt.setString(1, marca);
-            stmt.setString(2, modelo);
-            stmt.setString(3, matricula);
-            stmt.setString(4, vehiculo.getMatricula());
+            stmt.setInt(1, id);
+            stmt.setString(2, nombre);
+            stmt.setString(3, ape1);
+            stmt.setString(4, ape2);
+            stmt.setInt(5, usuario.getId());
             
             System.out.println(stmt.toString());
             
@@ -229,7 +230,7 @@ public class ConexionBD {
         
         cerrarSesion();
     }
-    */
+    
     private static void cerrarSesion() {
         try {
             rs.close();

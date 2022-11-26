@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import preguntasTest.clases.Usuario;
-import preguntasTest.gestion.GestionPreguntas;
+import preguntasTest.gestion.Gestion;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -38,7 +38,7 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
         
         usuarioActual = null;
                 
-        usuarios = GestionPreguntas.getInstance().obtenerUsuarios();
+        usuarios = Gestion.getInstance().obtenerUsuarios();
         
         for (int i = 0; i < usuarios.size(); i++) {
             menuUsuarios.add(new JMenuItem(usuarios.get(i).getNombre() + " " + usuarios.get(i).getApellido1() + " " + usuarios.get(i).getApellido2()));
