@@ -4,7 +4,13 @@
  */
 package preguntasTest.vista;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import preguntasTest.clases.Usuario;
+import preguntasTest.gestion.Gestion;
 
 /**
  *
@@ -12,14 +18,16 @@ import preguntasTest.clases.Usuario;
  */
 public class PanelCRUD extends javax.swing.JPanel {
     private VentanaPreguntasTest miVentana;
-    private Usuario usuarioActual;
+    private Usuario usuarioAEditar;
+    private Boolean editar;
     /**
      * Creates new form PanelCRUD
      */
     public PanelCRUD(VentanaPreguntasTest miVentana, Usuario usuario) {
         initComponents();
         this.miVentana = miVentana;
-        this.usuarioActual = usuario;
+        this.usuarioAEditar = usuario;
+        this.editar = false;
     }
 
     /**
@@ -31,19 +39,286 @@ public class PanelCRUD extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tbApellido2 = new javax.swing.JTextField();
+        btnRegistrar = new javax.swing.JButton();
+        btnBorrar = new javax.swing.JButton();
+        btnLeer = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaUsuarios = new javax.swing.JTable();
+        lblPregunta = new javax.swing.JLabel();
+        tbPregunta = new javax.swing.JTextField();
+        btnVolver = new javax.swing.JButton();
+        tbApellido1 = new javax.swing.JTextField();
+        tbNombre = new javax.swing.JTextField();
+        tbApellido3 = new javax.swing.JTextField();
+
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+
+        btnBorrar.setText("Borrar");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
+
+        btnLeer.setText("Leer");
+        btnLeer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLeerActionPerformed(evt);
+            }
+        });
+
+        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Id", "Nombre", "Apellido1", "Apellido2"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tablaUsuarios);
+
+        lblPregunta.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblPregunta.setText("Pregunta");
+        lblPregunta.setName(""); // NOI18N
+
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(tbNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tbApellido3, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tbApellido2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tbApellido1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblPregunta)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tbPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnBorrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRegistrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLeer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnVolver, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLeer, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tbPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPregunta))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tbNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tbApellido1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tbApellido2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tbApellido3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private static Boolean esNumerico(String cadena){
+	try {
+            Integer.parseInt(cadena);
+            return true;
+	} catch (NumberFormatException nfe){
+            return false;
+	}
+    }
+    
+    public void cargarTabla(JTable tablaUsuarios) {
+        List<Usuario> lista = Gestion.getInstance().obtenerUsuarios();
+
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        modelo.addColumn("Id");
+
+        modelo.addColumn("Nombre");
+
+        modelo.addColumn("Apellido1");
+        
+        modelo.addColumn("Apellido2");
+
+        for (Usuario usuario : lista) {
+
+            Object[] registroLeido
+                    = {
+                        usuario.getId(),
+                        usuario.getNombre(),
+                        usuario.getApellido1(),
+                        usuario.getApellido2()
+                    };
+
+            modelo.addRow(registroLeido);
+
+        }
+
+        tablaUsuarios.setModel(modelo);
+    }
+    
+    public void insertarUsuario() {
+        if (Gestion.getInstance().anyadirUsuario(new Usuario(Integer.parseInt(tbPregunta.getText()), tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString()))) {
+            cargarTabla(tablaUsuarios);
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "El usuario que se intenta añadir ya existe en nuestra base de datos.");
+        }
+    }
+    
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        if (editar) {
+            if (esNumerico(tbPregunta.getText())) {
+                if (Gestion.getInstance().editarVehiculo(usuarioAEditar, Integer.parseInt(tbPregunta.getText()), tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString())) {
+                    JOptionPane.showMessageDialog(null, "Usuario editado correctamente.");
+                    cargarTabla(tablaUsuarios);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese id.");
+                }
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Campo ID introducido incorrectamente, debe ser un número.");
+            }
+
+            btnRegistrar.setText("Registrar");
+            editar = false;
+        }
+        else {
+            if (esNumerico(tbPregunta.getText())) {
+                if (tbPregunta.getText().equals("") || tbNombre.getText().equals("") || tbApellido1.getText().equals("") || tbApellido2.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Debes introducir todos los valores para poder registrar un usuario.");
+                }
+                else {
+                    insertarUsuario();
+                    cargarTabla(tablaUsuarios);
+                }
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Campo ID introducido incorrectamente, debe ser un número.");
+            }
+        }
+
+        this.updateUI();
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        if (tablaUsuarios.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Debes seleccionar mínimo un usuario para poder eliminarlo.");
+        }
+        else {
+            int[] filas = tablaUsuarios.getSelectedRows();
+
+            List<Usuario> usuarios = new ArrayList<Usuario>();
+
+            for (int i = 0; i < filas.length; i++) {
+                usuarios.add(new Usuario(Integer.parseInt(tablaUsuarios.getValueAt(filas[i], 0).toString())));
+            }
+
+            Gestion.getInstance().eliminarUsuarios(usuarios);
+            cargarTabla(tablaUsuarios);
+        }
+
+        this.updateUI();
+    }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void btnLeerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeerActionPerformed
+        if (!editar) {
+            if (tablaUsuarios.getSelectedRowCount() == 1) {
+                usuarioAEditar = new Usuario(Integer.parseInt(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).toString()));
+
+                tbPregunta.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).toString());
+                tbNombre.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 1).toString());
+                tbApellido1.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 2).toString());
+                tbApellido2.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 3).toString());
+
+                btnRegistrar.setText("Editar");
+                btnLeer.setText("Cancelar");
+                editar = true;
+            }
+            else if (tablaUsuarios.getSelectedRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "Debes seleccionar mínimo un usuario para poder editarlo.");
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "No puedes editar más de un usuario a la vez.");
+            }
+        }
+        else {
+            editar = false;
+
+            btnRegistrar.setText("Registrar");
+            btnLeer.setText("Leer");
+        }
+    }//GEN-LAST:event_btnLeerActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        PanelInicio panel = new PanelInicio(miVentana);
+
+        miVentana.cambiarPanel(panel);
+    }//GEN-LAST:event_btnVolverActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBorrar;
+    private javax.swing.JButton btnLeer;
+    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JButton btnVolver;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblPregunta;
+    private javax.swing.JTable tablaUsuarios;
+    private javax.swing.JTextField tbApellido1;
+    private javax.swing.JTextField tbApellido2;
+    private javax.swing.JTextField tbApellido3;
+    private javax.swing.JTextField tbNombre;
+    private javax.swing.JTextField tbPregunta;
     // End of variables declaration//GEN-END:variables
 }
