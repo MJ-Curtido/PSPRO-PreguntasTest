@@ -63,6 +63,30 @@ public class ConexionBD {
         cerrarSesion();       
     }
     
+    public static void insertarOpcion(Opcion opcion) { 
+        enlace();
+        
+        try {
+            String sql = "INSERT INTO opcion (ID, TEXTO, CORRECTA, ID_PREGUNTA) VALUES (?, ?, ?, ?);";
+            stmt = conn.prepareStatement(sql);
+            
+            stmt.setInt(1, opcion.getId());
+            stmt.setString(2, opcion.getRespuesta());
+            stmt.setBoolean(3, opcion.getCorrecta());
+            stmt.setInt(4, opcion.getIdPregunta());
+            
+            System.out.println(stmt.toString());
+            
+            stmt.execute();
+        } catch (SQLIntegrityConstraintViolationException ex){
+            System.out.println("Error SQL: " + ex.toString());
+        } catch (SQLException ex) {
+            System.out.println("Error SQL: " + ex.toString());
+        }
+        
+        cerrarSesion();       
+    }
+    
     public static void eliminarUsuario(Usuario usuario) { 
         enlace();
         
@@ -208,10 +232,55 @@ public class ConexionBD {
             String sql = "UPDATE usuario SET NOMBRE = ?, APE1 = ?, APE2 = ? WHERE ID = ?;";
             stmt = conn.prepareStatement(sql);
             
-            stmt.setString(2, nombre);
-            stmt.setString(3, ape1);
-            stmt.setString(4, ape2);
-            stmt.setInt(5, usuario.getId());
+            stmt.setString(1, nombre);
+            stmt.setString(2, ape1);
+            stmt.setString(3, ape2);
+            stmt.setInt(4, usuario.getId());
+            
+            System.out.println(stmt.toString());
+            
+            stmt.execute();
+        } catch (SQLIntegrityConstraintViolationException ex){
+            System.out.println("Error SQL: " + ex.toString());
+        } catch (SQLException ex) {
+            System.out.println("Error SQL: " + ex.toString());
+        }
+        
+        cerrarSesion();
+    }
+    
+    public static void editarRespuesta(Opcion opcion, String texto, Boolean correcta) { 
+        enlace();
+        
+        try {
+            String sql = "UPDATE opcion SET TEXTO = ?, CORRECTA = ? WHERE ID = ?;";
+            stmt = conn.prepareStatement(sql);
+            
+            stmt.setString(1, texto);
+            stmt.setBoolean(2, correcta);
+            stmt.setInt(3, opcion.getId());
+            
+            System.out.println(stmt.toString());
+            
+            stmt.execute();
+        } catch (SQLIntegrityConstraintViolationException ex){
+            System.out.println("Error SQL: " + ex.toString());
+        } catch (SQLException ex) {
+            System.out.println("Error SQL: " + ex.toString());
+        }
+        
+        cerrarSesion();
+    }
+    
+    public static void editarPregunta(Pregunta pregunta, String texto) { 
+        enlace();
+        
+        try {
+            String sql = "UPDATE pregunta SET TEXTO = ? WHERE ID = ?;";
+            stmt = conn.prepareStatement(sql);
+            
+            stmt.setString(1, texto);
+            stmt.setInt(2, pregunta.getId());
             
             System.out.println(stmt.toString());
             

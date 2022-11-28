@@ -50,4 +50,16 @@ public class Gestion {
     public Integer obtenerIDUsuMax() {
         return ConexionBD.obtenerIDUsuMax();
     }
+    
+    public void editarRespuesta(Opcion opcion, String texto, Boolean correcta) {
+        ConexionBD.editarRespuesta(opcion, texto, correcta);
+    }
+
+    public void editarPregunta(Pregunta preguntaAEditar, String texto) {
+        ConexionBD.editarPregunta(preguntaAEditar, texto);
+    }
+
+    public void insertarOpcion(Opcion opcion) {
+        ConexionBD.insertarOpcion(opcion);
+    }
 }

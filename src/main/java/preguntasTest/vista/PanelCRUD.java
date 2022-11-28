@@ -5,9 +5,12 @@
 package preguntasTest.vista;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import javax.swing.AbstractButton;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import preguntasTest.clases.Opcion;
 import preguntasTest.clases.Pregunta;
 import preguntasTest.clases.Usuario;
 import preguntasTest.gestion.Gestion;
@@ -21,6 +24,8 @@ public class PanelCRUD extends javax.swing.JPanel {
     private Boolean editar;
     private Usuario usuarioAEditar;
     private List<Pregunta> listaPreguntas;
+    private Pregunta pregunta;
+    private List<Opcion> opcionesAEditar;
     /**
      * Creates new form PanelCRUD
      */
@@ -94,7 +99,6 @@ public class PanelCRUD extends javax.swing.JPanel {
         });
 
         rbtnGroup.add(rbtnOp1);
-        rbtnOp1.setSelected(true);
         rbtnOp1.setText("Opcion 1");
 
         rbtnGroup.add(rbtnOp2);
@@ -194,19 +198,22 @@ public class PanelCRUD extends javax.swing.JPanel {
 
     
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-if (editar) {
-            //Gestion.getInstance().editarUsuario(usuarioAEditar, tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString());
-            JOptionPane.showMessageDialog(null, "Pregunta editado correctamente.");
-            cargarLista();
+        if (editar) {
+            editarInsertarRespuestas();
+            Gestion.getInstance().editarPregunta(pregunta, tbPregunta.getText().toString());
             
+            JOptionPane.showMessageDialog(null, "Pregunta editada correctamente.");
+            cargarLista();
+
             btnRegistrar.setText("Registrar");
             editar = false;
         }
         else {
             if (tbPregunta.getText().equals("") || tbOp1.getText().equals("") || tbOp2.getText().equals("") || tbOp3.getText().equals("") || tbOp4.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Debes introducir todos los valores para poder registrar un usuario.");
+                JOptionPane.showMessageDialog(null, "Debes introducir todos los valores para poder registrar una pregunta.");
             }
             else {
+                editarInsertarRespuestas();
                 //insertarPregunta();
                 cargarLista();
             }
@@ -254,6 +261,36 @@ if (editar) {
         }
 
         jListaPreguntas.setModel(modelo);
+    }
+    
+    private void editarInsertarRespuestas() {
+        Enumeration<AbstractButton> buttons = rbtnGroup.getElements();
+        String texto = "";
+
+        for(int i = 0; i < rbtnGroup.getButtonCount(); i++){
+            switch (i) {
+                case 0:
+                    texto = tbOp1.getText().toString();
+                    break;
+                case 1:
+                    texto = tbOp2.getText().toString();
+                    break;
+                case 2:
+                    texto = tbOp3.getText().toString();
+                    break;
+                default:
+                    texto = tbOp4.getText().toString();
+                    break;
+            }
+
+            AbstractButton actual = buttons.nextElement();
+            if (editar) {
+                Gestion.getInstance().editarRespuesta(opcionesAEditar.get(i), texto, actual.isSelected());
+            }
+            else {
+                Gestion.getInstance().insertarOpcion(new Opcion(pregunta.getId(), actual.isSelected(), texto));
+            }
+        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
