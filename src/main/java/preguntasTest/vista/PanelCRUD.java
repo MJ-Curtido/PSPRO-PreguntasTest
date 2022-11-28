@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import preguntasTest.clases.Pregunta;
 import preguntasTest.clases.Usuario;
 import preguntasTest.gestion.Gestion;
@@ -19,9 +17,10 @@ import preguntasTest.gestion.Gestion;
  * @author manu1
  */
 public class PanelCRUD extends javax.swing.JPanel {
-    private VentanaPreguntasTest miVentana;
-    private Usuario usuarioAEditar;
+    VentanaPreguntasTest miVentana;
     private Boolean editar;
+    private Usuario usuarioAEditar;
+    private List<Pregunta> listaPreguntas;
     /**
      * Creates new form PanelCRUD
      */
@@ -30,6 +29,8 @@ public class PanelCRUD extends javax.swing.JPanel {
         this.miVentana = miVentana;
         this.usuarioAEditar = usuario;
         this.editar = false;
+        
+        cargarLista();
     }
 
     /**
@@ -191,118 +192,50 @@ public class PanelCRUD extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private static Boolean esNumerico(String cadena){
-	try {
-            Integer.parseInt(cadena);
-            return true;
-	} catch (NumberFormatException nfe){
-            return false;
-	}
-    }
     
-    public void cargarLista() {
-        List<Pregunta> lista = Gestion.getInstance().obtenerPreguntas(usuarioAEditar);
-
-        DefaultListModel modelo = new DefaultListModel();
-
-        for (Pregunta pregunta : lista) {
-            modelo.addElement(pregunta.getPregunta());
-        }
-
-        jListaPreguntas.setModel(modelo);
-    }
-    /*
-    public void insertarUsuario() {
-        if (Gestion.getInstance().anyadirUsuario(new Usuario(Integer.parseInt(tbPregunta.getText()), tbOp1.getText().toString(), tbOp2.getText().toString(), tbOp3.getText().toString()))) {
-            cargarLista(tablaUsuarios);
-        }
-        else {
-            JOptionPane.showMessageDialog(null, "El usuario que se intenta añadir ya existe en nuestra base de datos.");
-        }
-    }
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        if (editar) {
-            if (esNumerico(tbPregunta.getText())) {
-                if (Gestion.getInstance().editarVehiculo(usuarioAEditar, Integer.parseInt(tbPregunta.getText()), tbOp1.getText().toString(), tbOp2.getText().toString(), tbOp3.getText().toString())) {
-                    JOptionPane.showMessageDialog(null, "Pregunta editada correctamente.");
-                    cargarLista();
-                }
-                else {
-                    JOptionPane.showMessageDialog(null, "Ya existe una usuario con ese id.");
-                }
-            }
-            else {
-                JOptionPane.showMessageDialog(null, "Campo ID introducido incorrectamente, debe ser un número.");
-            }
-
+if (editar) {
+            //Gestion.getInstance().editarUsuario(usuarioAEditar, tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString());
+            JOptionPane.showMessageDialog(null, "Pregunta editado correctamente.");
+            cargarLista();
+            
             btnRegistrar.setText("Registrar");
             editar = false;
         }
         else {
-            if (esNumerico(tbPregunta.getText())) {
-                if (tbPregunta.getText().equals("") || tbOp1.getText().equals("") || tbOp2.getText().equals("") || tbOp3.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Debes introducir todos los valores para poder registrar un usuario.");
-                }
-                else {
-                    insertarUsuario();
-                    cargarTabla(tablaUsuarios);
-                }
+            if (tbPregunta.getText().equals("") || tbOp1.getText().equals("") || tbOp2.getText().equals("") || tbOp3.getText().equals("") || tbOp4.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Debes introducir todos los valores para poder registrar un usuario.");
             }
             else {
-                JOptionPane.showMessageDialog(null, "Campo ID introducido incorrectamente, debe ser un número.");
+                //insertarPregunta();
+                cargarLista();
             }
         }
-
+        
         this.updateUI();
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        if (tablaUsuarios.getSelectedRowCount() == 0) {
+        if (jListaPreguntas.getSelectedIndices().length == 0) {
             JOptionPane.showMessageDialog(null, "Debes seleccionar mínimo un usuario para poder eliminarlo.");
         }
         else {
-            int[] filas = tablaUsuarios.getSelectedRows();
-
-            List<Usuario> usuarios = new ArrayList<Usuario>();
-
+            int[] filas = jListaPreguntas.getSelectedIndices();
+            List<Pregunta> preguntas = new ArrayList<Pregunta>();
+            
             for (int i = 0; i < filas.length; i++) {
-                usuarios.add(new Usuario(Integer.parseInt(tablaUsuarios.getValueAt(filas[i], 0).toString())));
+                preguntas.add(listaPreguntas.get(filas[i]));
             }
-
-            Gestion.getInstance().eliminarUsuarios(usuarios);
-            cargarTabla(tablaUsuarios);
+            
+            //Gestion.getInstance().eliminarUsuarios(preguntas);            
+            cargarLista();
         }
-
+        
         this.updateUI();
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnLeerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeerActionPerformed
-        if (!editar) {
-            if (tablaUsuarios.getSelectedRowCount() == 1) {
-                usuarioAEditar = new Usuario(Integer.parseInt(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).toString()));
 
-                tbPregunta.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).toString());
-                tbOp1.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 1).toString());
-                tbOp2.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 2).toString());
-                tbOp3.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 3).toString());
-
-                btnRegistrar.setText("Editar");
-                btnLeer.setText("Cancelar");
-                editar = true;
-            }
-            else if (tablaUsuarios.getSelectedRowCount() == 0) {
-                JOptionPane.showMessageDialog(null, "Debes seleccionar mínimo un usuario para poder editarlo.");
-            }
-            else {
-                JOptionPane.showMessageDialog(null, "No puedes editar más de un usuario a la vez.");
-            }
-        }
-        else {
-            editar = false;
-
-            btnRegistrar.setText("Registrar");
-            btnLeer.setText("Leer");
-        }
     }//GEN-LAST:event_btnLeerActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -310,8 +243,19 @@ public class PanelCRUD extends javax.swing.JPanel {
 
         miVentana.cambiarPanel(panel);
     }//GEN-LAST:event_btnVolverActionPerformed
-*/
 
+    public void cargarLista() {
+        listaPreguntas = Gestion.getInstance().obtenerPreguntas(usuarioAEditar);
+
+        DefaultListModel modelo = new DefaultListModel();
+
+        for (Pregunta pregunta : listaPreguntas) {
+            modelo.addElement(pregunta.getPregunta());
+        }
+
+        jListaPreguntas.setModel(modelo);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnLeer;

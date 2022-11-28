@@ -175,27 +175,22 @@ public class ConexionBD {
         return listaOpciones;
     }
     
-    public static Usuario obtenerUsuario(Integer id) {
+    public static Integer obtenerIDUsuMax() {
         enlace();
         
-        Usuario usuario = null;
+        Integer idMax = -1;
         
         try {
             
-            String sql = "SELECT * FROM usuario WHERE id = ?;";
+            String sql = "SELECT MAX(ID) AS IDUSU FROM usuario;";
             stmt = conn.prepareStatement(sql);
-            
-            stmt.setInt(1, id);
             
             System.out.println(stmt.toString());
             
             rs = stmt.executeQuery();
             
             if(rs.next()){
-                usuario = new Usuario(rs.getInt("ID"),
-                        rs.getString("NOMBRE"),
-                        rs.getString("APE1"),
-                        rs.getString("APE2"));
+                idMax = rs.getInt("IDUSU");
             } 
         } catch (SQLException ex) {
             System.out.println("Error SQL: " + ex.getMessage());
@@ -203,17 +198,16 @@ public class ConexionBD {
         
         cerrarSesion();
         
-        return usuario;
+        return idMax;
     }
     
-    public static void editarUsuario(Usuario usuario, Integer id, String nombre, String ape1, String ape2) { 
+    public static void editarUsuario(Usuario usuario, String nombre, String ape1, String ape2) { 
         enlace();
         
         try {
-            String sql = "UPDATE usuario SET ID = ?, NOMBRE = ?, APE1 = ?, APE2 = ? WHERE ID = ?;";
+            String sql = "UPDATE usuario SET NOMBRE = ?, APE1 = ?, APE2 = ? WHERE ID = ?;";
             stmt = conn.prepareStatement(sql);
             
-            stmt.setInt(1, id);
             stmt.setString(2, nombre);
             stmt.setString(3, ape1);
             stmt.setString(4, ape2);

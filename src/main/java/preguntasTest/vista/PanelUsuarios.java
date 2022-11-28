@@ -20,6 +20,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
     VentanaPreguntasTest miVentana;
     private Boolean editar;
     private Usuario usuarioAEditar;
+    private List<Usuario> listaUsuarios;
     
     /**
      * Creates new form PanelUsuarios
@@ -30,7 +31,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
         this.miVentana = miVentana;
         editar = false;                                                                                                                                        
         
-        cargarTabla(tablaUsuarios);
+        cargarTabla();
     }
 
     /**
@@ -53,8 +54,6 @@ public class PanelUsuarios extends javax.swing.JPanel {
         btnRegistrar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         btnLeer = new javax.swing.JButton();
-        lblId = new javax.swing.JLabel();
-        tbId = new javax.swing.JTextField();
         btnVolver = new javax.swing.JButton();
 
         tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
@@ -111,10 +110,6 @@ public class PanelUsuarios extends javax.swing.JPanel {
             }
         });
 
-        lblId.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblId.setText("Id");
-        lblId.setName(""); // NOI18N
-
         btnVolver.setText("Volver");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,15 +151,10 @@ public class PanelUsuarios extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(tbNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblApellido1)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(tbApellido1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblId)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(tbId, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblApellido1)
+                                .addGap(18, 18, 18)
+                                .addComponent(tbApellido1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -173,10 +163,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tbId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblId))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tbNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblNombre)))
@@ -206,48 +193,25 @@ public class PanelUsuarios extends javax.swing.JPanel {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         if (editar) {
-            if (esNumerico(tbId.getText())) {
-                if (Gestion.getInstance().editarVehiculo(usuarioAEditar, Integer.parseInt(tbId.getText()), tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString())) {
-                    JOptionPane.showMessageDialog(null, "Usuario editado correctamente.");
-                    cargarTabla(tablaUsuarios);
-                }
-                else {
-                    JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese id.");
-                }
-            }
-            else {
-                JOptionPane.showMessageDialog(null, "Campo ID introducido incorrectamente, debe ser un número.");
-            }
+            Gestion.getInstance().editarUsuario(usuarioAEditar, tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString());
+            JOptionPane.showMessageDialog(null, "Usuario editado correctamente.");
+            cargarTabla();
             
             btnRegistrar.setText("Registrar");
             editar = false;
         }
         else {
-            if (esNumerico(tbId.getText())) {
-                if (tbId.getText().equals("") || tbNombre.getText().equals("") || tbApellido1.getText().equals("") || tbApellido2.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Debes introducir todos los valores para poder registrar un usuario.");
-                }
-                else {
-                    insertarUsuario();
-                    cargarTabla(tablaUsuarios);
-                }
+            if (tbNombre.getText().equals("") || tbApellido1.getText().equals("") || tbApellido2.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Debes introducir todos los valores para poder registrar un usuario.");
             }
             else {
-                JOptionPane.showMessageDialog(null, "Campo ID introducido incorrectamente, debe ser un número.");
+                insertarUsuario();
+                cargarTabla();
             }
         }
         
         this.updateUI();
     }//GEN-LAST:event_btnRegistrarActionPerformed
-
-    private static Boolean esNumerico(String cadena){
-	try {
-            Integer.parseInt(cadena);
-            return true;
-	} catch (NumberFormatException nfe){
-            return false;
-	}
-    }
     
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         if (tablaUsuarios.getSelectedRowCount() == 0) {
@@ -255,15 +219,27 @@ public class PanelUsuarios extends javax.swing.JPanel {
         }
         else {
             int[] filas = tablaUsuarios.getSelectedRows();
-            
-            List<Usuario> usuarios = new ArrayList<Usuario>();
+            List<Usuario> usuariosSinPizza = new ArrayList<Usuario>();
+            List<Usuario> usuariosConPizza = new ArrayList<Usuario>();
             
             for (int i = 0; i < filas.length; i++) {
-                usuarios.add(new Usuario(Integer.parseInt(tablaUsuarios.getValueAt(filas[i], 0).toString())));
+                if (Gestion.getInstance().obtenerPreguntas(listaUsuarios.get(filas[i])).size() == 0) {
+                    usuariosSinPizza.add(listaUsuarios.get(filas[i]));   
+                }
+                else {
+                    usuariosConPizza.add(listaUsuarios.get(filas[i])); 
+                }
             }
             
-            Gestion.getInstance().eliminarUsuarios(usuarios);
-            cargarTabla(tablaUsuarios);
+            Gestion.getInstance().eliminarUsuarios(usuariosSinPizza);
+            
+            if (usuariosConPizza.size() > 0) {
+                if (JOptionPane.showConfirmDialog(null, "Algún usuario seleccionado tiene preguntas, ¿Desea eliminarlo?", "CUIDADO", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    //hacer que los usuarios con pizza se borren en cascada
+                }
+            }
+            
+            cargarTabla();
         }
         
         this.updateUI();
@@ -272,9 +248,8 @@ public class PanelUsuarios extends javax.swing.JPanel {
     private void btnLeerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeerActionPerformed
         if (!editar) {
             if (tablaUsuarios.getSelectedRowCount() == 1) {
-                usuarioAEditar = new Usuario(Integer.parseInt(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).toString()));
+                usuarioAEditar = listaUsuarios.get(tablaUsuarios.getSelectedRow());
 
-                tbId.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).toString());
                 tbNombre.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 1).toString());
                 tbApellido1.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 2).toString());
                 tbApellido2.setText(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 3).toString());
@@ -305,16 +280,18 @@ public class PanelUsuarios extends javax.swing.JPanel {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     public void insertarUsuario() {
-        if (Gestion.getInstance().anyadirUsuario(new Usuario(Integer.parseInt(tbId.getText()), tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString()))) {
-            cargarTabla(tablaUsuarios);
+        if (Gestion.getInstance().obtenerIDUsuMax() != -1) {
+            Gestion.getInstance().anyadirUsuario(new Usuario((Gestion.getInstance().obtenerIDUsuMax() + 1), tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString()));
         }
         else {
-            JOptionPane.showMessageDialog(null, "El usuario que se intenta añadir ya existe en nuestra base de datos.");
+            Gestion.getInstance().anyadirUsuario(new Usuario(tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString()));
         }
+        
+        cargarTabla();
     }
     
-    public void cargarTabla(JTable tablaUsuarios) {
-        List<Usuario> lista = Gestion.getInstance().obtenerUsuarios();
+    public void cargarTabla() {
+        listaUsuarios = Gestion.getInstance().obtenerUsuarios();
 
         DefaultTableModel modelo = new DefaultTableModel();
 
@@ -326,7 +303,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
         
         modelo.addColumn("Apellido2");
 
-        for (Usuario usuario : lista) {
+        for (Usuario usuario : listaUsuarios) {
 
             Object[] registroLeido
                     = {
@@ -351,12 +328,10 @@ public class PanelUsuarios extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblApellido1;
     private javax.swing.JLabel lblApellido2;
-    private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JTable tablaUsuarios;
     private javax.swing.JTextField tbApellido1;
     private javax.swing.JTextField tbApellido2;
-    private javax.swing.JTextField tbId;
     private javax.swing.JTextField tbNombre;
     // End of variables declaration//GEN-END:variables
 }

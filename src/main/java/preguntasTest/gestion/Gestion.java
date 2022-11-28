@@ -33,32 +33,21 @@ public class Gestion {
         return ConexionBD.getUsuarios();
     }
     
-    public Boolean anyadirUsuario(Usuario usuario) {
-        Boolean anyadido = false;
-        
-        if (ConexionBD.obtenerUsuario(usuario.getId()) == null) {
-            ConexionBD.insertarUsuario(usuario);
-            anyadido = true;
-        }
-        
-        return anyadido;
+    public void anyadirUsuario(Usuario usuario) {
+        ConexionBD.insertarUsuario(usuario);
     }
 
-    public boolean editarVehiculo(Usuario usuarioAEditar, Integer id, String nombre, String ape1, String ape2) {
-        Boolean editado = false;
-        
-        if (ConexionBD.obtenerUsuario(id) == null || usuarioAEditar.getId().equals(id)) {
-            ConexionBD.editarUsuario(usuarioAEditar, id, nombre, ape1, ape2);
-            
-            editado = true;
-        }
-        
-        return editado;
+    public void editarUsuario(Usuario usuarioAEditar, String nombre, String ape1, String ape2) {
+        ConexionBD.editarUsuario(usuarioAEditar, nombre, ape1, ape2);
     }
     
     public void eliminarUsuarios(List<Usuario> lstUsuarios) {
         for (int i = 0; i < lstUsuarios.size(); i++) {
             ConexionBD.eliminarUsuario(lstUsuarios.get(i));
         }
+    }
+    
+    public Integer obtenerIDUsuMax() {
+        return ConexionBD.obtenerIDUsuMax();
     }
 }
