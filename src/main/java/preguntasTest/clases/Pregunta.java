@@ -27,6 +27,14 @@ public class Pregunta {
             return texto;
     }
 
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
     public void setPregunta(String pregunta) {
             this.texto = pregunta;
     }

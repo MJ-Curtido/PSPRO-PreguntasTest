@@ -22,17 +22,17 @@ import preguntasTest.gestion.Gestion;
 public class PanelCRUD extends javax.swing.JPanel {
     VentanaPreguntasTest miVentana;
     private Boolean editar;
-    private Usuario usuarioAEditar;
+    private Usuario usuario;
     private List<Pregunta> listaPreguntas;
     private Pregunta pregunta;
-    private List<Opcion> opcionesAEditar;
+    private List<Opcion> opciones;
     /**
      * Creates new form PanelCRUD
      */
     public PanelCRUD(VentanaPreguntasTest miVentana, Usuario usuario) {
         initComponents();
         this.miVentana = miVentana;
-        this.usuarioAEditar = usuario;
+        this.usuario = usuario;
         this.editar = false;
         
         cargarLista();
@@ -213,8 +213,10 @@ public class PanelCRUD extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Debes introducir todos los valores para poder registrar una pregunta.");
             }
             else {
+                pregunta = new Pregunta((Gestion.getInstance().obtenerIDPregMax() + 1), tbPregunta.getText().toString(), usuario.getId());
+                Gestion.getInstance().insertarPregunta(pregunta);
                 editarInsertarRespuestas();
-                //insertarPregunta();
+                
                 cargarLista();
             }
         }
@@ -228,13 +230,12 @@ public class PanelCRUD extends javax.swing.JPanel {
         }
         else {
             int[] filas = jListaPreguntas.getSelectedIndices();
-            List<Pregunta> preguntas = new ArrayList<Pregunta>();
             
             for (int i = 0; i < filas.length; i++) {
-                preguntas.add(listaPreguntas.get(filas[i]));
+                Gestion.getInstance().eliminarRespuestas(Gestion.getInstance().obtenerRespuestas(listaPreguntas.get(filas[i])));
+                Gestion.getInstance().eliminarPregunta(listaPreguntas.get(filas[i]));  
             }
-            
-            //Gestion.getInstance().eliminarUsuarios(preguntas);            
+                      
             cargarLista();
         }
         
@@ -242,7 +243,30 @@ public class PanelCRUD extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnLeerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeerActionPerformed
+        if (!editar) {
+            if (jListaPreguntas.getSelectedIndices().length == 1) {
+                pregunta = listaPreguntas.get(jListaPreguntas.getSelectedIndex());
+                
+                tbPregunta.setText(pregunta.getPregunta());
+                rellenarRespuestas();
 
+                btnRegistrar.setText("Editar");
+                btnLeer.setText("Cancelar");
+                editar = true;
+            }
+            else if (jListaPreguntas.getSelectedIndices().length == 0) {
+                JOptionPane.showMessageDialog(null, "Debes seleccionar mínimo un usuario para poder editarlo.");
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "No puedes editar más de un usuario a la vez.");
+            }
+        }
+        else {
+            editar = false;
+            
+            btnRegistrar.setText("Registrar");
+            btnLeer.setText("Leer");
+        }
     }//GEN-LAST:event_btnLeerActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -252,7 +276,7 @@ public class PanelCRUD extends javax.swing.JPanel {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     public void cargarLista() {
-        listaPreguntas = Gestion.getInstance().obtenerPreguntas(usuarioAEditar);
+        listaPreguntas = Gestion.getInstance().obtenerPreguntas(usuario);
 
         DefaultListModel modelo = new DefaultListModel();
 
@@ -285,12 +309,26 @@ public class PanelCRUD extends javax.swing.JPanel {
 
             AbstractButton actual = buttons.nextElement();
             if (editar) {
-                Gestion.getInstance().editarRespuesta(opcionesAEditar.get(i), texto, actual.isSelected());
+                Gestion.getInstance().editarRespuesta(opciones.get(i), texto, actual.isSelected());
             }
             else {
-                Gestion.getInstance().insertarOpcion(new Opcion(pregunta.getId(), actual.isSelected(), texto));
+                Gestion.getInstance().insertarOpcion(new Opcion((Gestion.getInstance().obtenerIDOpMax() + 1), pregunta.getId(), actual.isSelected(), texto));
             }
         }
+    }
+    
+    public void rellenarRespuestas() {
+        opciones = Gestion.getInstance().obtenerRespuestas(pregunta);
+
+        tbOp1.setText(opciones.get(0).getRespuesta());
+        tbOp2.setText(opciones.get(1).getRespuesta());
+        tbOp3.setText(opciones.get(2).getRespuesta());
+        tbOp4.setText(opciones.get(3).getRespuesta());
+        
+        if (opciones.get(0).getCorrecta()) rbtnOp1.setSelected(true);
+        else if (opciones.get(1).getCorrecta()) rbtnOp2.setSelected(true);
+        else if (opciones.get(2).getCorrecta()) rbtnOp3.setSelected(true);
+        else rbtnOp4.setSelected(true);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

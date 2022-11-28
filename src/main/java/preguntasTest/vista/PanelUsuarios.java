@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import preguntasTest.clases.Opcion;
+import preguntasTest.clases.Pregunta;
 import preguntasTest.clases.Usuario;
 import preguntasTest.gestion.Gestion;
 
@@ -20,6 +22,9 @@ public class PanelUsuarios extends javax.swing.JPanel {
     private Boolean editar;
     private Usuario usuarioAEditar;
     private List<Usuario> listaUsuarios;
+    private Pregunta pregunta;
+    private List<Opcion> opciones;
+    private List<Pregunta> preguntas;
     
     /**
      * Creates new form PanelUsuarios
@@ -234,7 +239,16 @@ public class PanelUsuarios extends javax.swing.JPanel {
             
             if (usuariosConPizza.size() > 0) {
                 if (JOptionPane.showConfirmDialog(null, "Algún usuario seleccionado tiene preguntas, ¿Desea eliminarlo?", "CUIDADO", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    //hacer que los usuarios con pizza se borren en cascada
+                    for (int i = 0; i < usuariosConPizza.size(); i++) {
+                        preguntas = Gestion.getInstance().obtenerPreguntas(usuariosConPizza.get(i));
+                        
+                        for (int j = 0; j < preguntas.size(); j++) {
+                            Gestion.getInstance().eliminarRespuestas(Gestion.getInstance().obtenerRespuestas(preguntas.get(i)));
+                            Gestion.getInstance().eliminarPregunta(preguntas.get(i));  
+                        }
+                    }
+                    
+                    Gestion.getInstance().eliminarUsuarios(usuariosConPizza);
                 }
             }
             

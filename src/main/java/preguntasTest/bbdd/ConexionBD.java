@@ -87,6 +87,29 @@ public class ConexionBD {
         cerrarSesion();       
     }
     
+    public static void insertarPregunta(Pregunta pregunta) { 
+        enlace();
+        
+        try {
+            String sql = "INSERT INTO pregunta (ID, TEXTO, ID_USUARIO) VALUES (?, ?, ?);";
+            stmt = conn.prepareStatement(sql);
+            
+            stmt.setInt(1, pregunta.getId());
+            stmt.setString(2, pregunta.getPregunta());
+            stmt.setInt(3, pregunta.getIdUsuario());
+            
+            System.out.println(stmt.toString());
+            
+            stmt.execute();
+        } catch (SQLIntegrityConstraintViolationException ex){
+            System.out.println("Error SQL: " + ex.toString());
+        } catch (SQLException ex) {
+            System.out.println("Error SQL: " + ex.toString());
+        }
+        
+        cerrarSesion();       
+    }
+    
     public static void eliminarUsuario(Usuario usuario) { 
         enlace();
         
@@ -95,6 +118,44 @@ public class ConexionBD {
             stmt = conn.prepareStatement(sql);
             
             stmt.setInt(1, usuario.getId());
+            
+            System.out.println(stmt.toString());
+            
+            stmt.execute();
+        } catch (SQLException ex) {
+            System.out.println("Error SQL por?: " + ex.toString());
+        }
+        
+        cerrarSesion();
+    }
+    
+    public static void eliminarPregunta(Pregunta pregunta) { 
+        enlace();
+        
+        try {
+            String sql = "DELETE FROM pregunta WHERE ID = ?;";
+            stmt = conn.prepareStatement(sql);
+            
+            stmt.setInt(1, pregunta.getId());
+            
+            System.out.println(stmt.toString());
+            
+            stmt.execute();
+        } catch (SQLException ex) {
+            System.out.println("Error SQL por?: " + ex.toString());
+        }
+        
+        cerrarSesion();
+    }
+    
+    public static void eliminarRespuesta(Opcion opcion) { 
+        enlace();
+        
+        try {
+            String sql = "DELETE FROM opcion WHERE ID = ?;";
+            stmt = conn.prepareStatement(sql);
+            
+            stmt.setInt(1, opcion.getId());
             
             System.out.println(stmt.toString());
             
@@ -207,6 +268,58 @@ public class ConexionBD {
         try {
             
             String sql = "SELECT MAX(ID) AS IDUSU FROM usuario;";
+            stmt = conn.prepareStatement(sql);
+            
+            System.out.println(stmt.toString());
+            
+            rs = stmt.executeQuery();
+            
+            if(rs.next()){
+                idMax = rs.getInt("IDUSU");
+            } 
+        } catch (SQLException ex) {
+            System.out.println("Error SQL: " + ex.getMessage());
+        }
+        
+        cerrarSesion();
+        
+        return idMax;
+    }
+    
+    public static Integer obtenerIDPregMax() {
+        enlace();
+        
+        Integer idMax = -1;
+        
+        try {
+            
+            String sql = "SELECT MAX(ID) AS IDUSU FROM pregunta;";
+            stmt = conn.prepareStatement(sql);
+            
+            System.out.println(stmt.toString());
+            
+            rs = stmt.executeQuery();
+            
+            if(rs.next()){
+                idMax = rs.getInt("IDUSU");
+            } 
+        } catch (SQLException ex) {
+            System.out.println("Error SQL: " + ex.getMessage());
+        }
+        
+        cerrarSesion();
+        
+        return idMax;
+    }
+    
+    public static Integer obtenerIDOpMax() {
+        enlace();
+        
+        Integer idMax = -1;
+        
+        try {
+            
+            String sql = "SELECT MAX(ID) AS IDUSU FROM opcion;";
             stmt = conn.prepareStatement(sql);
             
             System.out.println(stmt.toString());

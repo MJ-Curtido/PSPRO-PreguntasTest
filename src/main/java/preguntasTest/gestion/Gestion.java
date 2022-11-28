@@ -62,4 +62,26 @@ public class Gestion {
     public void insertarOpcion(Opcion opcion) {
         ConexionBD.insertarOpcion(opcion);
     }
+    
+    public void insertarPregunta(Pregunta pregunta) {
+        ConexionBD.insertarPregunta(pregunta);
+    }
+    
+    public void eliminarPregunta(Pregunta pregunta) {
+        ConexionBD.eliminarPregunta(pregunta);
+    }
+    
+    public void eliminarRespuestas(List<Opcion> lstOpciones) {
+        for (int i = 0; i < lstOpciones.size(); i++) {
+            ConexionBD.eliminarRespuesta(lstOpciones.get(i));
+        }
+    }
+    
+    public Integer obtenerIDOpMax() {
+        return ConexionBD.obtenerIDOpMax();
+    }
+    
+    public Integer obtenerIDPregMax() {
+        return ConexionBD.obtenerIDPregMax();
+    }
 }
