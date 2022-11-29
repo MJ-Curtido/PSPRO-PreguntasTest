@@ -99,6 +99,7 @@ public class PanelCRUD extends javax.swing.JPanel {
         });
 
         rbtnGroup.add(rbtnOp1);
+        rbtnOp1.setSelected(true);
         rbtnOp1.setText("Opcion 1");
 
         rbtnGroup.add(rbtnOp2);

@@ -223,32 +223,32 @@ public class PanelUsuarios extends javax.swing.JPanel {
         }
         else {
             int[] filas = tablaUsuarios.getSelectedRows();
-            List<Usuario> usuariosSinPizza = new ArrayList<Usuario>();
-            List<Usuario> usuariosConPizza = new ArrayList<Usuario>();
+            List<Usuario> usuariosSinPreg = new ArrayList<Usuario>();
+            List<Usuario> usuariosConPreg = new ArrayList<Usuario>();
             
             for (int i = 0; i < filas.length; i++) {
                 if (Gestion.getInstance().obtenerPreguntas(listaUsuarios.get(filas[i])).size() == 0) {
-                    usuariosSinPizza.add(listaUsuarios.get(filas[i]));   
+                    usuariosSinPreg.add(listaUsuarios.get(filas[i]));   
                 }
                 else {
-                    usuariosConPizza.add(listaUsuarios.get(filas[i])); 
+                    usuariosConPreg.add(listaUsuarios.get(filas[i])); 
                 }
             }
             
-            Gestion.getInstance().eliminarUsuarios(usuariosSinPizza);
+            Gestion.getInstance().eliminarUsuarios(usuariosSinPreg);
             
-            if (usuariosConPizza.size() > 0) {
+            if (usuariosConPreg.size() > 0) {
                 if (JOptionPane.showConfirmDialog(null, "Algún usuario seleccionado tiene preguntas, ¿Desea eliminarlo?", "CUIDADO", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    for (int i = 0; i < usuariosConPizza.size(); i++) {
-                        preguntas = Gestion.getInstance().obtenerPreguntas(usuariosConPizza.get(i));
+                    for (int i = 0; i < usuariosConPreg.size(); i++) {
+                        preguntas = Gestion.getInstance().obtenerPreguntas(usuariosConPreg.get(i));
                         
                         for (int j = 0; j < preguntas.size(); j++) {
-                            Gestion.getInstance().eliminarRespuestas(Gestion.getInstance().obtenerRespuestas(preguntas.get(i)));
-                            Gestion.getInstance().eliminarPregunta(preguntas.get(i));  
+                            Gestion.getInstance().eliminarRespuestas(Gestion.getInstance().obtenerRespuestas(preguntas.get(j)));
+                            Gestion.getInstance().eliminarPregunta(preguntas.get(j));  
                         }
                     }
                     
-                    Gestion.getInstance().eliminarUsuarios(usuariosConPizza);
+                    Gestion.getInstance().eliminarUsuarios(usuariosConPreg);
                 }
             }
             
