@@ -7,16 +7,20 @@ package preguntasTest.vista;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import preguntasTest.clases.Usuario;
 
 /**
  *
  * @author manu1
  */
 public class PanelFinalTest {
-    private MockVentanaPreguntas miVentanaPreguntas;
+    private VentanaPreguntas miVentanaPreguntas;
             
     public PanelFinalTest() {
-        miVentanaPreguntas = new MockVentanaPreguntas();
+        miVentanaPreguntas = mock(VentanaPreguntas.class);
+        when(miVentanaPreguntas.obtenerUsuario()).thenReturn(new Usuario("Pablo Miguel", "del Castillo", "Barba"));
     }
     
     @BeforeEach
