@@ -37,21 +37,6 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
         panelActivo.setVisible(true);
         
         usuarioActual = null;
-                
-        usuarios = Gestion.getInstance().obtenerUsuarios();
-        
-        for (int i = 0; i < usuarios.size(); i++) {
-            menuUsuarios.add(new JMenuItem(usuarios.get(i).getNombre() + " " + usuarios.get(i).getApellido1() + " " + usuarios.get(i).getApellido2()));
-            
-            ActionListener accion = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cambiarUsuario((JMenuItem) e.getSource());
-                }
-            };
-            
-            menuUsuarios.getItem(i).addActionListener(accion);
-        }
     }
     
     public Usuario obtenerUsuario() {
@@ -98,6 +83,11 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
         menuUsuarios = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         menuUsuarios.setText("Usuarios");
         menuBarraArriba.add(menuUsuarios);
@@ -106,6 +96,25 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        if (Gestion.getInstance().obtenerUsuarios() != null) {
+            usuarios = Gestion.getInstance().obtenerUsuarios();
+        }
+        
+        for (int i = 0; i < usuarios.size(); i++) {
+            menuUsuarios.add(new JMenuItem(usuarios.get(i).getNombre() + " " + usuarios.get(i).getApellido1() + " " + usuarios.get(i).getApellido2()));
+            
+            ActionListener accion = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    cambiarUsuario((JMenuItem) e.getSource());
+                }
+            };
+            
+            menuUsuarios.getItem(i).addActionListener(accion);
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
