@@ -11,7 +11,7 @@ import preguntasTest.clases.Usuario;
  *
  * @author Dam
  */
-public class MockDAO extends Gestion{
+public class MockDAO extends DAOProyecto{
     private ArrayList<Usuario> falsaBD;
     
     public MockDAO() {

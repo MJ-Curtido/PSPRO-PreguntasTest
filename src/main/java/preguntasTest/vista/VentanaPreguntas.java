@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import preguntasTest.clases.Usuario;
-import preguntasTest.gestion.Gestion;
+import preguntasTest.gestion.DAOProyecto;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -17,14 +17,14 @@ import preguntasTest.gestion.Gestion;
  *
  * @author Dam
  */
-public class VentanaPreguntasTest extends javax.swing.JFrame {
+public class VentanaPreguntas extends javax.swing.JFrame {
     protected JPanel panelActivo;
     protected Usuario usuarioActual;
     ArrayList<Usuario> usuarios;
     /**
      * Creates new form VentanaPreguntasTest
      */
-    public VentanaPreguntasTest() {
+    public VentanaPreguntas() {
         initComponents();
         
         PanelInicio panel = new PanelInicio(this);
@@ -98,9 +98,7 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        if (Gestion.getInstance().obtenerUsuarios() != null) {
-            usuarios = Gestion.getInstance().obtenerUsuarios();
-        }
+        usuarios = DAOProyecto.getInstance().obtenerUsuarios();
         
         for (int i = 0; i < usuarios.size(); i++) {
             menuUsuarios.add(new JMenuItem(usuarios.get(i).getNombre() + " " + usuarios.get(i).getApellido1() + " " + usuarios.get(i).getApellido2()));
@@ -133,20 +131,21 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPreguntas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPreguntas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPreguntas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPreguntas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaPreguntasTest().setVisible(true);
+                new VentanaPreguntas().setVisible(true);
             }
         });
     }

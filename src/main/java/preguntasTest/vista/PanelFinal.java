@@ -5,24 +5,31 @@
 package preguntasTest.vista;
 
 import preguntasTest.clases.Usuario;
-import preguntasTest.gestion.Gestion;
+import preguntasTest.gestion.DAOProyecto;
 
 /**
  *
  * @author Dam
  */
 public class PanelFinal extends javax.swing.JPanel {
-    private VentanaPreguntasTest miVentana;
-    Usuario usuarioActual;
+    private VentanaPreguntas miVentana;
+    private Usuario usuarioActual;
+    private Integer numAciertos, numPreguntas;
     /**
      * Creates new form panelFinal
      */
-    public PanelFinal(VentanaPreguntasTest miVentana, Usuario usuario,  Integer numAciertos) {
+    public PanelFinal(VentanaPreguntas miVentana, Usuario usuario,  Integer numAciertos, Integer numPreguntas) {
         initComponents();
         
         this.miVentana = miVentana;
         this.usuarioActual = usuario;
-        lblAciertos.setText("Número de aciertos: " + numAciertos + " de " + Gestion.getInstance().obtenerPreguntas(usuario).size());
+        this.numAciertos = numAciertos;
+        this.numPreguntas = numPreguntas;
+        lblAciertos.setText("Número de aciertos: " + numAciertos + " de " + numPreguntas + "\nPorcentaje acertado: " + obtenerPorcentaje() + "%");
+    }
+    
+    public Double obtenerPorcentaje() {
+        return Math.round(numAciertos * 10000.0 / numPreguntas) / 100.0;
     }
 
     /**

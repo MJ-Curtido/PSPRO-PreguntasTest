@@ -7,15 +7,15 @@ import preguntasTest.clases.Opcion;
 import preguntasTest.clases.Pregunta;
 import preguntasTest.clases.Usuario;
 
-public class Gestion {
-    private static Gestion gestion = null;
+public class DAOProyecto {
+    private static DAOProyecto gestion = null;
     
-    public Gestion() {
+    public DAOProyecto() {
     }
     
-    public static Gestion getInstance() {
+    public static DAOProyecto getInstance() {
         if (gestion == null) {
-            gestion = new Gestion();
+            gestion = new DAOProyecto();
         }
 
         return gestion;

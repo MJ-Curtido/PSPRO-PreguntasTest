@@ -13,14 +13,14 @@ import javax.swing.JOptionPane;
 import preguntasTest.clases.Opcion;
 import preguntasTest.clases.Pregunta;
 import preguntasTest.clases.Usuario;
-import preguntasTest.gestion.Gestion;
+import preguntasTest.gestion.DAOProyecto;
 
 /**
  *
  * @author manu1
  */
 public class PanelCRUD extends javax.swing.JPanel {
-    VentanaPreguntasTest miVentana;
+    VentanaPreguntas miVentana;
     private Boolean editar;
     private Usuario usuario;
     private List<Pregunta> listaPreguntas;
@@ -29,7 +29,7 @@ public class PanelCRUD extends javax.swing.JPanel {
     /**
      * Creates new form PanelCRUD
      */
-    public PanelCRUD(VentanaPreguntasTest miVentana, Usuario usuario) {
+    public PanelCRUD(VentanaPreguntas miVentana, Usuario usuario) {
         initComponents();
         this.miVentana = miVentana;
         this.usuario = usuario;
@@ -201,7 +201,7 @@ public class PanelCRUD extends javax.swing.JPanel {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         if (editar) {
             editarInsertarRespuestas();
-            Gestion.getInstance().editarPregunta(pregunta, tbPregunta.getText().toString());
+            DAOProyecto.getInstance().editarPregunta(pregunta, tbPregunta.getText().toString());
             
             JOptionPane.showMessageDialog(null, "Pregunta editada correctamente.");
             cargarLista();
@@ -214,8 +214,8 @@ public class PanelCRUD extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Debes introducir todos los valores para poder registrar una pregunta.");
             }
             else {
-                pregunta = new Pregunta((Gestion.getInstance().obtenerIDPregMax() + 1), tbPregunta.getText().toString(), usuario.getId());
-                Gestion.getInstance().insertarPregunta(pregunta);
+                pregunta = new Pregunta((DAOProyecto.getInstance().obtenerIDPregMax() + 1), tbPregunta.getText().toString(), usuario.getId());
+                DAOProyecto.getInstance().insertarPregunta(pregunta);
                 editarInsertarRespuestas();
                 
                 cargarLista();
@@ -233,8 +233,8 @@ public class PanelCRUD extends javax.swing.JPanel {
             int[] filas = jListaPreguntas.getSelectedIndices();
             
             for (int i = 0; i < filas.length; i++) {
-                Gestion.getInstance().eliminarRespuestas(Gestion.getInstance().obtenerRespuestas(listaPreguntas.get(filas[i])));
-                Gestion.getInstance().eliminarPregunta(listaPreguntas.get(filas[i]));  
+                DAOProyecto.getInstance().eliminarRespuestas(DAOProyecto.getInstance().obtenerRespuestas(listaPreguntas.get(filas[i])));
+                DAOProyecto.getInstance().eliminarPregunta(listaPreguntas.get(filas[i]));  
             }
                       
             cargarLista();
@@ -277,7 +277,7 @@ public class PanelCRUD extends javax.swing.JPanel {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     public void cargarLista() {
-        listaPreguntas = Gestion.getInstance().obtenerPreguntas(usuario);
+        listaPreguntas = DAOProyecto.getInstance().obtenerPreguntas(usuario);
 
         DefaultListModel modelo = new DefaultListModel();
 
@@ -310,16 +310,16 @@ public class PanelCRUD extends javax.swing.JPanel {
 
             AbstractButton actual = buttons.nextElement();
             if (editar) {
-                Gestion.getInstance().editarRespuesta(opciones.get(i), texto, actual.isSelected());
+                DAOProyecto.getInstance().editarRespuesta(opciones.get(i), texto, actual.isSelected());
             }
             else {
-                Gestion.getInstance().insertarOpcion(new Opcion((Gestion.getInstance().obtenerIDOpMax() + 1), pregunta.getId(), actual.isSelected(), texto));
+                DAOProyecto.getInstance().insertarOpcion(new Opcion((DAOProyecto.getInstance().obtenerIDOpMax() + 1), pregunta.getId(), actual.isSelected(), texto));
             }
         }
     }
     
     public void rellenarRespuestas() {
-        opciones = Gestion.getInstance().obtenerRespuestas(pregunta);
+        opciones = DAOProyecto.getInstance().obtenerRespuestas(pregunta);
 
         tbOp1.setText(opciones.get(0).getRespuesta());
         tbOp2.setText(opciones.get(1).getRespuesta());

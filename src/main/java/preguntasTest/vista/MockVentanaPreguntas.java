@@ -8,37 +8,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import preguntasTest.clases.Usuario;
-import preguntasTest.gestion.Gestion;
 import preguntasTest.gestion.MockDAO;
 
 /**
  *
  * @author Dam
  */
-public class MockVentanaPreguntasTest extends VentanaPreguntasTest {
+public class MockVentanaPreguntas extends VentanaPreguntas {
+    private ArrayList<Usuario> usuarios;
     /**
      * Creates new form MockVentanaPreguntasTest
      */
-    public MockVentanaPreguntasTest() {
+    public MockVentanaPreguntas() {
         initComponents();
         
         PanelInicio panel = new PanelInicio(this);
         
         this.setSize(500, 500);
         
-        super.panelActivo = panel;
-        this.getContentPane().add(super.panelActivo);
-        super.panelActivo.setSize(this.getSize());
-        super.panelActivo.setVisible(true);
+        panelActivo = panel;
+        getContentPane().add(panelActivo);
+        panelActivo.setSize(this.getSize());
+        panelActivo.setVisible(true);
         
         usuarioActual = null;
                 
-        super.usuarios = MockDAO.getInstance().obtenerUsuarios();
+        this.usuarios = new MockDAO().obtenerUsuarios();
         
-        for (int i = 0; i < usuarios.size(); i++) {
-            menuUsuarios.add(new JMenuItem(usuarios.get(i).getNombre() + " " + usuarios.get(i).getApellido1() + " " + usuarios.get(i).getApellido2()));
+        for (int i = 0; i < this.usuarios.size(); i++) {
+            menuUsuarios.add(new JMenuItem(this.usuarios.get(i).getNombre() + " " + this.usuarios.get(i).getApellido1() + " " + this.usuarios.get(i).getApellido2()));
             
             ActionListener accion = new ActionListener() {
                 @Override
@@ -50,6 +49,13 @@ public class MockVentanaPreguntasTest extends VentanaPreguntasTest {
             menuUsuarios.getItem(i).addActionListener(accion);
         }
     }
+
+    @Override
+    public Usuario obtenerUsuario() {
+        return this.usuarios.get(0);
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -101,20 +107,21 @@ public class MockVentanaPreguntasTest extends VentanaPreguntasTest {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MockVentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MockVentanaPreguntas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MockVentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MockVentanaPreguntas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MockVentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MockVentanaPreguntas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MockVentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MockVentanaPreguntas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MockVentanaPreguntasTest().setVisible(true);
+                new MockVentanaPreguntas().setVisible(true);
             }
         });
     }

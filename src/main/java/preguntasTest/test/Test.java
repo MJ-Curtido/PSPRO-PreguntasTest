@@ -3,7 +3,7 @@ package preguntasTest.test;
 
 import java.awt.EventQueue;
 import java.lang.reflect.InvocationTargetException;
-import preguntasTest.vista.VentanaPreguntasTest;
+import preguntasTest.vista.VentanaPreguntas;
 
 public class Test {
 
@@ -11,7 +11,7 @@ public class Test {
         EventQueue.invokeAndWait(new Runnable() {
             public void run() {
                 try {
-                    VentanaPreguntasTest frame = new VentanaPreguntasTest();
+                    VentanaPreguntas frame = new VentanaPreguntas();
                     frame.setVisible(true);
                 }
                 catch(Exception e) {

@@ -13,13 +13,13 @@ import preguntasTest.clases.Usuario;
  */
 public class PanelInicio extends javax.swing.JPanel {
 
-    private VentanaPreguntasTest miVentana;
+    private VentanaPreguntas miVentana;
     private Usuario usuarioActual;
 
     /**
      * Creates new form panelInicio
      */
-    public PanelInicio(VentanaPreguntasTest miVentana) {
+    public PanelInicio(VentanaPreguntas miVentana) {
         initComponents();
         this.miVentana = miVentana;
         

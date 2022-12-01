@@ -9,7 +9,7 @@ import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import preguntasTest.clases.Opcion;
 import preguntasTest.clases.Pregunta;
-import preguntasTest.gestion.Gestion;
+import preguntasTest.gestion.DAOProyecto;
 import preguntasTest.clases.Usuario;
 
 /**
@@ -17,7 +17,7 @@ import preguntasTest.clases.Usuario;
  * @author manu
  */
 public class PanelPreguntas extends javax.swing.JPanel {
-    private VentanaPreguntasTest miVentana;
+    private VentanaPreguntas miVentana;
     private Integer numPregunta;
     private ArrayList<Pregunta> preguntas;
     private ArrayList<Opcion> respuestas;
@@ -26,7 +26,7 @@ public class PanelPreguntas extends javax.swing.JPanel {
     /**
      * Creates new form PanelPreguntas
      */
-    public PanelPreguntas(VentanaPreguntasTest miVentana, Usuario usuario) {
+    public PanelPreguntas(VentanaPreguntas miVentana, Usuario usuario) {
         initComponents();
         
         this.miVentana = miVentana;
@@ -36,8 +36,8 @@ public class PanelPreguntas extends javax.swing.JPanel {
         numPregunta = 0;
         
         this.usuarioActual = usuario;
-        preguntas = Gestion.getInstance().obtenerPreguntas(usuario);
-        respuestas = Gestion.getInstance().obtenerRespuestas(this.preguntas.get(this.numPregunta));
+        preguntas = DAOProyecto.getInstance().obtenerPreguntas(usuario);
+        respuestas = DAOProyecto.getInstance().obtenerRespuestas(this.preguntas.get(this.numPregunta));
         
         lblNumPregunta.setText((this.numPregunta + 1) + "");
         lblPregunta.setText(this.preguntas.get(numPregunta).getPregunta());
@@ -146,7 +146,7 @@ public class PanelPreguntas extends javax.swing.JPanel {
                 this.contAciertos++;
             }  
             
-            PanelFinal panel =new PanelFinal(miVentana, usuarioActual, contAciertos);
+            PanelFinal panel =new PanelFinal(miVentana, usuarioActual, contAciertos, this.preguntas.size());
         
             miVentana.cambiarPanel(panel);
         }
@@ -157,7 +157,7 @@ public class PanelPreguntas extends javax.swing.JPanel {
             
             this.numPregunta++;
         
-            respuestas = Gestion.getInstance().obtenerRespuestas(this.preguntas.get(this.numPregunta));
+            respuestas = DAOProyecto.getInstance().obtenerRespuestas(this.preguntas.get(this.numPregunta));
 
             lblNumPregunta.setText((this.numPregunta + 1) + "");
             lblPregunta.setText(this.preguntas.get(this.numPregunta).getPregunta());

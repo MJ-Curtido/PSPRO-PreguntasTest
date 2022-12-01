@@ -11,14 +11,14 @@ import javax.swing.table.DefaultTableModel;
 import preguntasTest.clases.Opcion;
 import preguntasTest.clases.Pregunta;
 import preguntasTest.clases.Usuario;
-import preguntasTest.gestion.Gestion;
+import preguntasTest.gestion.DAOProyecto;
 
 /**
  *
  * @author Dam
  */
 public class PanelUsuarios extends javax.swing.JPanel {
-    VentanaPreguntasTest miVentana;
+    VentanaPreguntas miVentana;
     private Boolean editar;
     private Usuario usuarioAEditar;
     private List<Usuario> listaUsuarios;
@@ -29,7 +29,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
     /**
      * Creates new form PanelUsuarios
      */
-    public PanelUsuarios(VentanaPreguntasTest miVentana) {
+    public PanelUsuarios(VentanaPreguntas miVentana) {
         initComponents();
         
         this.miVentana = miVentana;
@@ -197,7 +197,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         if (editar) {
-            Gestion.getInstance().editarUsuario(usuarioAEditar, tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString());
+            DAOProyecto.getInstance().editarUsuario(usuarioAEditar, tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString());
             JOptionPane.showMessageDialog(null, "Usuario editado correctamente.");
             cargarTabla();
             
@@ -227,7 +227,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
             List<Usuario> usuariosConPreg = new ArrayList<Usuario>();
             
             for (int i = 0; i < filas.length; i++) {
-                if (Gestion.getInstance().obtenerPreguntas(listaUsuarios.get(filas[i])).size() == 0) {
+                if (DAOProyecto.getInstance().obtenerPreguntas(listaUsuarios.get(filas[i])).size() == 0) {
                     usuariosSinPreg.add(listaUsuarios.get(filas[i]));   
                 }
                 else {
@@ -235,20 +235,20 @@ public class PanelUsuarios extends javax.swing.JPanel {
                 }
             }
             
-            Gestion.getInstance().eliminarUsuarios(usuariosSinPreg);
+            DAOProyecto.getInstance().eliminarUsuarios(usuariosSinPreg);
             
             if (usuariosConPreg.size() > 0) {
                 if (JOptionPane.showConfirmDialog(null, "Algún usuario seleccionado tiene preguntas, ¿Desea eliminarlo?", "CUIDADO", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     for (int i = 0; i < usuariosConPreg.size(); i++) {
-                        preguntas = Gestion.getInstance().obtenerPreguntas(usuariosConPreg.get(i));
+                        preguntas = DAOProyecto.getInstance().obtenerPreguntas(usuariosConPreg.get(i));
                         
                         for (int j = 0; j < preguntas.size(); j++) {
-                            Gestion.getInstance().eliminarRespuestas(Gestion.getInstance().obtenerRespuestas(preguntas.get(j)));
-                            Gestion.getInstance().eliminarPregunta(preguntas.get(j));  
+                            DAOProyecto.getInstance().eliminarRespuestas(DAOProyecto.getInstance().obtenerRespuestas(preguntas.get(j)));
+                            DAOProyecto.getInstance().eliminarPregunta(preguntas.get(j));  
                         }
                     }
                     
-                    Gestion.getInstance().eliminarUsuarios(usuariosConPreg);
+                    DAOProyecto.getInstance().eliminarUsuarios(usuariosConPreg);
                 }
             }
             
@@ -293,18 +293,18 @@ public class PanelUsuarios extends javax.swing.JPanel {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     public void insertarUsuario() {
-        if (Gestion.getInstance().obtenerIDUsuMax() != -1) {
-            Gestion.getInstance().anyadirUsuario(new Usuario((Gestion.getInstance().obtenerIDUsuMax() + 1), tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString()));
+        if (DAOProyecto.getInstance().obtenerIDUsuMax() != -1) {
+            DAOProyecto.getInstance().anyadirUsuario(new Usuario((DAOProyecto.getInstance().obtenerIDUsuMax() + 1), tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString()));
         }
         else {
-            Gestion.getInstance().anyadirUsuario(new Usuario(tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString()));
+            DAOProyecto.getInstance().anyadirUsuario(new Usuario(tbNombre.getText().toString(), tbApellido1.getText().toString(), tbApellido2.getText().toString()));
         }
         
         cargarTabla();
     }
     
     public void cargarTabla() {
-        listaUsuarios = Gestion.getInstance().obtenerUsuarios();
+        listaUsuarios = DAOProyecto.getInstance().obtenerUsuarios();
 
         DefaultTableModel modelo = new DefaultTableModel();
 
