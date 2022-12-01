@@ -2,11 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package preguntasTest.mock;
+package preguntasTest.gestion;
 
 import java.util.ArrayList;
 import preguntasTest.clases.Usuario;
-import preguntasTest.gestion.Gestion;
 
 /**
  *
@@ -17,16 +16,14 @@ public class MockDAO extends Gestion{
     
     public MockDAO() {
         this.falsaBD = new ArrayList<Usuario>();
-        falsaBD.add(new Usuario("Renault", "Zoe", "2345FDF"));
-        falsaBD.add(new Usuario("Renault", "Fluence", "0000FTL"));
-        falsaBD.add(new Usuario("Tesla", "3", "2422FHT"));
-        falsaBD.add(new Usuario("Tesla", "X", "1221FDF"));
+        falsaBD.add(new Usuario("Pablo Miguel", "del Castillo", "Barba"));
+        falsaBD.add(new Usuario("Marta", "Mariscal", "Velázquez"));
+        falsaBD.add(new Usuario("Manuel Jesús", "Curtido", "Rosado"));
+        falsaBD.add(new Usuario("Jonny", "Melabo", "Srry"));
     }
 
     @Override
     public ArrayList<Usuario> obtenerUsuarios() {
         return falsaBD;
     }
-    
-    
 }

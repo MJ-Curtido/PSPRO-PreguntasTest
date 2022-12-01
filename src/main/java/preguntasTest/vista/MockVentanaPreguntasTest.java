@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package preguntasTest.vista;
 
 import java.awt.event.ActionEvent;
@@ -7,38 +11,31 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import preguntasTest.clases.Usuario;
 import preguntasTest.gestion.Gestion;
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+import preguntasTest.gestion.MockDAO;
 
 /**
  *
  * @author Dam
  */
-public class VentanaPreguntasTest extends javax.swing.JFrame {
-    protected JPanel panelActivo;
-    protected Usuario usuarioActual;
-    ArrayList<Usuario> usuarios;
+public class MockVentanaPreguntasTest extends VentanaPreguntasTest {
     /**
-     * Creates new form VentanaPreguntasTest
+     * Creates new form MockVentanaPreguntasTest
      */
-    public VentanaPreguntasTest() {
+    public MockVentanaPreguntasTest() {
         initComponents();
         
         PanelInicio panel = new PanelInicio(this);
         
         this.setSize(500, 500);
         
-        panelActivo = panel;
-        this.getContentPane().add(panelActivo);
-        panelActivo.setSize(this.getSize());
-        panelActivo.setVisible(true);
+        super.panelActivo = panel;
+        this.getContentPane().add(super.panelActivo);
+        super.panelActivo.setSize(this.getSize());
+        super.panelActivo.setVisible(true);
         
         usuarioActual = null;
                 
-        usuarios = Gestion.getInstance().obtenerUsuarios();
+        super.usuarios = MockDAO.getInstance().obtenerUsuarios();
         
         for (int i = 0; i < usuarios.size(); i++) {
             menuUsuarios.add(new JMenuItem(usuarios.get(i).getNombre() + " " + usuarios.get(i).getApellido1() + " " + usuarios.get(i).getApellido2()));
@@ -53,38 +50,7 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
             menuUsuarios.getItem(i).addActionListener(accion);
         }
     }
-    
-    public Usuario obtenerUsuario() {
-        return usuarioActual;
-    }
-    
-    protected void cambiarUsuario(JMenuItem usuario) {
-        for (int i = 0; i < menuUsuarios.getItemCount(); i++) {
-            if (menuUsuarios.getItem(i) == usuario) {
-                usuarioActual = usuarios.get(i);
-                menuUsuarios.setText(usuario.getText());
-            }
-        }
-    }  
-    
-    public void cambiarPanel(JPanel panel){
-        panelActivo.setVisible(false);
-        this.getContentPane().remove(panelActivo);
-        panelActivo = panel;
-        this.getContentPane().add(panelActivo);
-        panelActivo.setSize(this.getSize());
-        panelActivo.setVisible(true);
-        
-        if (panel instanceof PanelInicio) {
-            menuUsuarios.setEnabled(true);
-        }
-        else {
-            menuUsuarios.setEnabled(false);
-        }
-        
-        panelActivo.updateUI();
-    }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -103,6 +69,17 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
         menuBarraArriba.add(menuUsuarios);
 
         setJMenuBar(menuBarraArriba);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 277, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -124,20 +101,20 @@ public class VentanaPreguntasTest extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MockVentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MockVentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MockVentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MockVentanaPreguntasTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaPreguntasTest().setVisible(true);
+                new MockVentanaPreguntasTest().setVisible(true);
             }
         });
     }
