@@ -4,10 +4,14 @@
  */
 package preguntasTest.vista;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import preguntasTest.bbdd.ConexionBD;
 import preguntasTest.clases.Opcion;
 import preguntasTest.clases.Pregunta;
 import preguntasTest.clases.Usuario;
@@ -304,6 +308,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
     }
     
     public void cargarTabla() {
+        /*
         listaUsuarios = DAOProyecto.getInstance().obtenerUsuarios();
 
         DefaultTableModel modelo = new DefaultTableModel();
@@ -313,24 +318,33 @@ public class PanelUsuarios extends javax.swing.JPanel {
         modelo.addColumn("Nombre");
 
         modelo.addColumn("Apellido1");
-        
+
         modelo.addColumn("Apellido2");
 
         for (Usuario usuario : listaUsuarios) {
 
-            Object[] registroLeido
-                    = {
-                        usuario.getId(),
-                        usuario.getNombre(),
-                        usuario.getApellido1(),
-                        usuario.getApellido2()
-                    };
+        Object[] registroLeido
+        = {
+        usuario.getId(),
+        usuario.getNombre(),
+        usuario.getApellido1(),
+        usuario.getApellido2()
+        };
 
-            modelo.addRow(registroLeido);
+        modelo.addRow(registroLeido);
 
         }
 
         tablaUsuarios.setModel(modelo);
+        */
+        
+        listaUsuarios = DAOProyecto.getInstance().obtenerUsuarios();
+        
+        ConexionBD.fillTable(tablaUsuarios, "SELECT * FROM usuario");
+        
+        //tablaUsuarios.setModel(ConexionBD.buildTableModel());
+        
+        //ConexionBD.resultSetToTableModel("SELECT * FROM usuario", tablaUsuarios);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
